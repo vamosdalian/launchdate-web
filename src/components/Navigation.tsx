@@ -19,11 +19,6 @@ const Navigation = () => {
             </Link>
           </li>
           <li>
-            <Link to="/rockets" className={isActive('/rockets') ? 'active' : ''}>
-              Rockets
-            </Link>
-          </li>
-          <li>
             <Link to="/launches" className={isActive('/launches') ? 'active' : ''}>
               Launch Dates
             </Link>
@@ -34,13 +29,18 @@ const Navigation = () => {
             </Link>
           </li>
           <li>
-            <Link to="/bases" className={isActive('/bases') ? 'active' : ''}>
-              Launch Bases
+            <Link to="/rockets" className={isActive('/rockets') ? 'active' : ''}>
+              Rockets
             </Link>
           </li>
           <li>
             <Link to="/companies" className={isActive('/companies') ? 'active' : ''}>
               Companies
+            </Link>
+          </li>
+          <li>
+            <Link to="/bases" className={isActive('/bases') ? 'active' : ''}>
+              Launch Bases
             </Link>
           </li>
         </ul>
