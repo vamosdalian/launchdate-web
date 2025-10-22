@@ -27,7 +27,7 @@ function App() {
             <Route path="/companies" element={<Companies />} />
           </Routes>
         </main>
-        <footer className="footer border-t py-6 bg-card">
+        <footer className="footer border-t py-6 bg-accent">
           <div className="container mx-auto px-4 text-center text-muted-foreground">
             <p>&copy; 2025 LaunchDate. All rights reserved.</p>
           </div>

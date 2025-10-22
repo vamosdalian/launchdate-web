@@ -1,8 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { useTheme } from '@/hooks/useTheme';
 
 const Navigation = () => {
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -13,38 +15,48 @@ const Navigation = () => {
           <Link to="/" className="flex items-center gap-2 text-xl font-bold">
             🚀 LaunchDate
           </Link>
-          <ul className="flex items-center gap-1">
-            <li>
-              <Button asChild variant={isActive('/') ? 'default' : 'ghost'}>
-                <Link to="/">Home</Link>
-              </Button>
-            </li>
-            <li>
-              <Button asChild variant={isActive('/launches') ? 'default' : 'ghost'}>
-                <Link to="/launches">Launch Dates</Link>
-              </Button>
-            </li>
-            <li>
-              <Button asChild variant={isActive('/news') ? 'default' : 'ghost'}>
-                <Link to="/news">News</Link>
-              </Button>
-            </li>
-            <li>
-              <Button asChild variant={isActive('/rockets') ? 'default' : 'ghost'}>
-                <Link to="/rockets">Rockets</Link>
-              </Button>
-            </li>
-            <li>
-              <Button asChild variant={isActive('/companies') ? 'default' : 'ghost'}>
-                <Link to="/companies">Companies</Link>
-              </Button>
-            </li>
-            <li>
-              <Button asChild variant={isActive('/bases') ? 'default' : 'ghost'}>
-                <Link to="/bases">Launch Bases</Link>
-              </Button>
-            </li>
-          </ul>
+          <div className="flex items-center gap-2">
+            <ul className="flex items-center gap-1">
+              <li>
+                <Button asChild variant={isActive('/') ? 'default' : 'ghost'}>
+                  <Link to="/">Home</Link>
+                </Button>
+              </li>
+              <li>
+                <Button asChild variant={isActive('/launches') ? 'default' : 'ghost'}>
+                  <Link to="/launches">Launch Dates</Link>
+                </Button>
+              </li>
+              <li>
+                <Button asChild variant={isActive('/news') ? 'default' : 'ghost'}>
+                  <Link to="/news">News</Link>
+                </Button>
+              </li>
+              <li>
+                <Button asChild variant={isActive('/rockets') ? 'default' : 'ghost'}>
+                  <Link to="/rockets">Rockets</Link>
+                </Button>
+              </li>
+              <li>
+                <Button asChild variant={isActive('/companies') ? 'default' : 'ghost'}>
+                  <Link to="/companies">Companies</Link>
+                </Button>
+              </li>
+              <li>
+                <Button asChild variant={isActive('/bases') ? 'default' : 'ghost'}>
+                  <Link to="/bases">Launch Bases</Link>
+                </Button>
+              </li>
+            </ul>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+            >
+              {theme === 'light' ? '🌙' : '☀️'}
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
