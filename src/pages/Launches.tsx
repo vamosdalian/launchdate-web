@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom';
 import { launches } from '../data/sampleData';
-import './Launches.css';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const Launches = () => {
   const formatDate = (dateString: string) => {
@@ -15,75 +17,68 @@ const Launches = () => {
     });
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusBadge = (status: string) => {
     switch (status) {
       case 'scheduled':
-        return 'status-scheduled';
+        return <Badge>🕒 Scheduled</Badge>;
       case 'successful':
-        return 'status-successful';
+        return <Badge className="bg-green-600">✅ Successful</Badge>;
       case 'failed':
-        return 'status-failed';
+        return <Badge variant="destructive">❌ Failed</Badge>;
       case 'cancelled':
-        return 'status-cancelled';
+        return <Badge variant="secondary">🚫 Cancelled</Badge>;
       default:
-        return '';
+        return <Badge variant="outline">{status}</Badge>;
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'scheduled':
-        return '🕒';
-      case 'successful':
-        return '✅';
-      case 'failed':
-        return '❌';
-      case 'cancelled':
-        return '🚫';
-      default:
-        return '';
-    }
-  };
+  // Sort launches by date
+  const sortedLaunches = [...launches].sort((a, b) => 
+    new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 
   return (
-    <div className="launches-page">
-      <div className="page-header">
-        <h1>Launch Schedule</h1>
-        <p>Stay updated with upcoming and past rocket launches</p>
+    <div className="min-h-screen bg-background">
+      <div className="border-b bg-card py-12">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl font-bold mb-2">Launch Schedule</h1>
+          <p className="text-xl text-muted-foreground">Stay updated with upcoming and past rocket launches</p>
+        </div>
       </div>
 
-      <div className="launches-list">
-        {launches.map((launch) => (
-          <div key={launch.id} className="launch-card">
-            <div className="launch-header">
-              <div className="launch-date">
-                <span className="date-label">Launch Date</span>
-                <span className="date-value">{formatDate(launch.date)}</span>
-              </div>
-              <span className={`launch-status ${getStatusColor(launch.status)}`}>
-                {getStatusIcon(launch.status)} {launch.status.toUpperCase()}
-              </span>
-            </div>
-            <h2>{launch.name}</h2>
-            <div className="launch-details">
-              <div className="detail-item">
-                <span className="detail-icon">🚀</span>
-                <div>
-                  <span className="detail-label">Rocket</span>
-                  <span className="detail-value">{launch.rocket}</span>
-                </div>
-              </div>
-              <div className="detail-item">
-                <span className="detail-icon">📍</span>
-                <div>
-                  <span className="detail-label">Launch Site</span>
-                  <span className="detail-value">{launch.launchBase}</span>
-                </div>
-              </div>
-            </div>
-            <p className="launch-description">{launch.description}</p>
-          </div>
-        ))}
+      <div className="container mx-auto px-4 py-12">
+        <div className="space-y-4 max-w-4xl mx-auto">
+          {sortedLaunches.map((launch) => (
+            <Link key={launch.id} to={`/launches/${launch.id}`}>
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader>
+                  <div className="flex justify-between items-start gap-4">
+                    <div className="flex-1">
+                      <CardTitle className="text-2xl mb-2">{launch.name}</CardTitle>
+                      <CardDescription className="text-base">
+                        {formatDate(launch.date)}
+                      </CardDescription>
+                    </div>
+                    {getStatusBadge(launch.status)}
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex gap-6 mb-3 text-sm flex-wrap">
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">🚀 Rocket:</span>
+                      <span className="font-medium">{launch.rocket}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">📍 Site:</span>
+                      <span className="font-medium">{launch.launchBase}</span>
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground">{launch.description}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
