@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import './Navigation.css';
+import { Button } from '@/components/ui/button';
 
 const Navigation = () => {
   const location = useLocation();
@@ -7,46 +7,49 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="navigation">
-      <div className="nav-container">
-        <Link to="/" className="nav-logo">
-          🚀 LaunchDate
-        </Link>
-        <ul className="nav-links">
-          <li>
-            <Link to="/" className={isActive('/') ? 'active' : ''}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/launches" className={isActive('/launches') ? 'active' : ''}>
-              Launch Dates
-            </Link>
-          </li>
-          <li>
-            <Link to="/news" className={isActive('/news') ? 'active' : ''}>
-              News
-            </Link>
-          </li>
-          <li>
-            <Link to="/rockets" className={isActive('/rockets') ? 'active' : ''}>
-              Rockets
-            </Link>
-          </li>
-          <li>
-            <Link to="/companies" className={isActive('/companies') ? 'active' : ''}>
-              Companies
-            </Link>
-          </li>
-          <li>
-            <Link to="/bases" className={isActive('/bases') ? 'active' : ''}>
-              Launch Bases
-            </Link>
-          </li>
-        </ul>
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto px-4">
+        <div className="flex h-16 items-center justify-between">
+          <Link to="/" className="flex items-center gap-2 text-xl font-bold">
+            🚀 LaunchDate
+          </Link>
+          <ul className="flex items-center gap-1">
+            <li>
+              <Button asChild variant={isActive('/') ? 'default' : 'ghost'}>
+                <Link to="/">Home</Link>
+              </Button>
+            </li>
+            <li>
+              <Button asChild variant={isActive('/launches') ? 'default' : 'ghost'}>
+                <Link to="/launches">Launch Dates</Link>
+              </Button>
+            </li>
+            <li>
+              <Button asChild variant={isActive('/news') ? 'default' : 'ghost'}>
+                <Link to="/news">News</Link>
+              </Button>
+            </li>
+            <li>
+              <Button asChild variant={isActive('/rockets') ? 'default' : 'ghost'}>
+                <Link to="/rockets">Rockets</Link>
+              </Button>
+            </li>
+            <li>
+              <Button asChild variant={isActive('/companies') ? 'default' : 'ghost'}>
+                <Link to="/companies">Companies</Link>
+              </Button>
+            </li>
+            <li>
+              <Button asChild variant={isActive('/bases') ? 'default' : 'ghost'}>
+                <Link to="/bases">Launch Bases</Link>
+              </Button>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   );
 };
 
 export default Navigation;
+
