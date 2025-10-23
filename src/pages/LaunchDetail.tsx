@@ -256,95 +256,65 @@ const LaunchDetail = () => {
               {/* Right Column: Timeline */}
               <div>
                 <h2 className="text-3xl font-bold mb-6">发射流程</h2>
-                <div className="relative">
-                  {/* Vertical line */}
-                  <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-[#2a2a2a] md:left-[2.5rem]"></div>
-                  
-                  <div className="space-y-8">
-                    <div className="relative">
-                      <div className="md:flex items-center md:space-x-4 mb-3">
-                        <div className="flex items-center space-x-4 md:space-x-2 md:space-x-reverse">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0a0a0a] border-2 border-[#007bff] shadow md:order-1 relative z-10">
-                            <svg className="w-5 h-5 text-[#007bff]" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clipRule="evenodd" />
-                            </svg>
-                          </div>
-                          <p className="font-bold text-lg md:w-28">T-00:00:00</p>
-                        </div>
-                      </div>
-                      <div className="ml-14 md:ml-44">
-                        <p className="text-gray-400">{rocket?.name || '火箭'}点火升空</p>
-                      </div>
+                <div className="relative pl-8">
+                  <div className="relative pb-8">
+                    <div 
+                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
+                    ></div>
+                    <div 
+                      className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
+                    ></div>
+                    <p className="font-bold text-lg">T-00:00:00</p>
+                    <p className="text-gray-400">{rocket?.name || '火箭'}点火升空</p>
+                  </div>
+                  <div className="relative pb-8">
+                    <div 
+                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
+                    ></div>
+                    <div 
+                      className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
+                    ></div>
+                    <p className="font-bold text-lg">T+00:01:12</p>
+                    <p className="text-gray-400">通过 Max-Q (最大动压点)</p>
+                  </div>
+                  <div className="relative pb-8">
+                    <div 
+                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
+                    ></div>
+                    <div 
+                      className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
+                    ></div>
+                    <p className="font-bold text-lg">T+00:02:27</p>
+                    <p className="text-gray-400">一级主引擎关闭 (MECO)</p>
+                  </div>
+                  <div className="relative pb-8">
+                    <div 
+                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
+                    ></div>
+                    <div 
+                      className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
+                    ></div>
+                    <p className="font-bold text-lg">T+00:02:31</p>
+                    <p className="text-gray-400">一二级分离</p>
+                  </div>
+                  {rocket?.name.includes('Falcon') && (
+                    <div className="relative pb-8">
+                      <div 
+                        className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
+                      ></div>
+                      <div 
+                        className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
+                      ></div>
+                      <p className="font-bold text-lg">T+00:08:45</p>
+                      <p className="text-gray-400">一级助推器着陆</p>
                     </div>
-                    <div className="relative">
-                      <div className="md:flex items-center md:space-x-4 mb-3">
-                        <div className="flex items-center space-x-4 md:space-x-2 md:space-x-reverse">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0a0a0a] border-2 border-[#007bff] shadow md:order-1 relative z-10">
-                            <div className="w-3 h-3 rounded-full bg-[#007bff]"></div>
-                          </div>
-                          <p className="font-bold text-lg md:w-28">T+00:01:12</p>
-                        </div>
-                      </div>
-                      <div className="ml-14 md:ml-44">
-                        <p className="text-gray-400">通过 Max-Q (最大动压点)</p>
-                      </div>
-                    </div>
-                    <div className="relative">
-                      <div className="md:flex items-center md:space-x-4 mb-3">
-                        <div className="flex items-center space-x-4 md:space-x-2 md:space-x-reverse">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0a0a0a] border-2 border-[#007bff] shadow md:order-1 relative z-10">
-                            <div className="w-3 h-3 rounded-full bg-[#007bff]"></div>
-                          </div>
-                          <p className="font-bold text-lg md:w-28">T+00:02:27</p>
-                        </div>
-                      </div>
-                      <div className="ml-14 md:ml-44">
-                        <p className="text-gray-400">一级主引擎关闭 (MECO)</p>
-                      </div>
-                    </div>
-                    <div className="relative">
-                      <div className="md:flex items-center md:space-x-4 mb-3">
-                        <div className="flex items-center space-x-4 md:space-x-2 md:space-x-reverse">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0a0a0a] border-2 border-[#007bff] shadow md:order-1 relative z-10">
-                            <div className="w-3 h-3 rounded-full bg-[#007bff]"></div>
-                          </div>
-                          <p className="font-bold text-lg md:w-28">T+00:02:31</p>
-                        </div>
-                      </div>
-                      <div className="ml-14 md:ml-44">
-                        <p className="text-gray-400">一二级分离</p>
-                      </div>
-                    </div>
-                    {rocket?.name.includes('Falcon') && (
-                      <div className="relative">
-                        <div className="md:flex items-center md:space-x-4 mb-3">
-                          <div className="flex items-center space-x-4 md:space-x-2 md:space-x-reverse">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0a0a0a] border-2 border-[#007bff] shadow md:order-1 relative z-10">
-                              <div className="w-3 h-3 rounded-full bg-[#007bff]"></div>
-                            </div>
-                            <p className="font-bold text-lg md:w-28">T+00:08:45</p>
-                          </div>
-                        </div>
-                        <div className="ml-14 md:ml-44">
-                          <p className="text-gray-400">一级助推器着陆</p>
-                        </div>
-                      </div>
-                    )}
-                    <div className="relative">
-                      <div className="md:flex items-center md:space-x-4 mb-3">
-                        <div className="flex items-center space-x-4 md:space-x-2 md:space-x-reverse">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0a0a0a] border-2 border-[#007bff] shadow md:order-1 relative z-10">
-                            <svg className="w-5 h-5 text-[#007bff]" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" clipRule="evenodd" />
-                            </svg>
-                          </div>
-                          <p className="font-bold text-lg md:w-28">T+01:04:29</p>
-                        </div>
-                      </div>
-                      <div className="ml-14 md:ml-44">
-                        <p className="text-gray-400">载荷部署</p>
-                      </div>
-                    </div>
+                  )}
+                  <div className="relative">
+                    <div 
+                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
+                    ></div>
+                    <p className="font-bold text-lg">T+01:04:29</p>
+                    <p className="text-gray-400">载荷部署</p>
                   </div>
                 </div>
               </div>
