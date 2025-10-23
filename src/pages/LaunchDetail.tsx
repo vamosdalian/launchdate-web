@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Timeline, TimelineItem } from '@/components/ui/timeline';
 import { launches, rockets, launchBases } from '@/data/sampleData';
 import { useEffect, useState } from 'react';
 
@@ -256,67 +257,41 @@ const LaunchDetail = () => {
               {/* Right Column: Timeline */}
               <div>
                 <h2 className="text-3xl font-bold mb-6">发射流程</h2>
-                <div className="relative pl-8">
-                  <div className="relative pb-8">
-                    <div 
-                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
-                    ></div>
-                    <div 
-                      className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
-                    ></div>
-                    <p className="font-bold text-lg">T-00:00:00</p>
-                    <p className="text-gray-400">{rocket?.name || '火箭'}点火升空</p>
-                  </div>
-                  <div className="relative pb-8">
-                    <div 
-                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
-                    ></div>
-                    <div 
-                      className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
-                    ></div>
-                    <p className="font-bold text-lg">T+00:01:12</p>
-                    <p className="text-gray-400">通过 Max-Q (最大动压点)</p>
-                  </div>
-                  <div className="relative pb-8">
-                    <div 
-                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
-                    ></div>
-                    <div 
-                      className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
-                    ></div>
-                    <p className="font-bold text-lg">T+00:02:27</p>
-                    <p className="text-gray-400">一级主引擎关闭 (MECO)</p>
-                  </div>
-                  <div className="relative pb-8">
-                    <div 
-                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
-                    ></div>
-                    <div 
-                      className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
-                    ></div>
-                    <p className="font-bold text-lg">T+00:02:31</p>
-                    <p className="text-gray-400">一二级分离</p>
-                  </div>
+                <Timeline>
+                  <TimelineItem
+                    time="T-00:00:00"
+                    title="点火升空"
+                    description={`${rocket?.name || '火箭'}主引擎点火，开始升空`}
+                  />
+                  <TimelineItem
+                    time="T+00:01:12"
+                    title="通过 Max-Q"
+                    description="火箭通过最大动压点，承受最大气动压力"
+                  />
+                  <TimelineItem
+                    time="T+00:02:27"
+                    title="MECO"
+                    description="一级主引擎关闭 (Main Engine Cut-Off)"
+                  />
+                  <TimelineItem
+                    time="T+00:02:31"
+                    title="级间分离"
+                    description="一二级分离，二级引擎点火"
+                  />
                   {rocket?.name.includes('Falcon') && (
-                    <div className="relative pb-8">
-                      <div 
-                        className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
-                      ></div>
-                      <div 
-                        className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
-                      ></div>
-                      <p className="font-bold text-lg">T+00:08:45</p>
-                      <p className="text-gray-400">一级助推器着陆</p>
-                    </div>
+                    <TimelineItem
+                      time="T+00:08:45"
+                      title="助推器着陆"
+                      description="一级助推器成功回收着陆"
+                    />
                   )}
-                  <div className="relative">
-                    <div 
-                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
-                    ></div>
-                    <p className="font-bold text-lg">T+01:04:29</p>
-                    <p className="text-gray-400">载荷部署</p>
-                  </div>
-                </div>
+                  <TimelineItem
+                    time="T+01:04:29"
+                    title="载荷部署"
+                    description="到达目标轨道，开始载荷部署"
+                    isLast={true}
+                  />
+                </Timeline>
               </div>
             </div>
           </div>
