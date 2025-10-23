@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Home from './pages/Home';
 import Rockets from './pages/Rockets';
@@ -10,23 +10,27 @@ import LaunchBases from './pages/LaunchBases';
 import Companies from './pages/Companies';
 import './App.css';
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  // Don't show global footer on LaunchDetail pages (they have their own)
+  const showFooter = !location.pathname.match(/^\/launches\/\d+$/);
+
   return (
-    <Router>
-      <div className="app">
-        <Navigation />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/rockets" element={<Rockets />} />
-            <Route path="/rockets/:id" element={<RocketDetail />} />
-            <Route path="/launches" element={<Launches />} />
-            <Route path="/launches/:id" element={<LaunchDetail />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/bases" element={<LaunchBases />} />
-            <Route path="/companies" element={<Companies />} />
-          </Routes>
-        </main>
+    <div className="app">
+      <Navigation />
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/rockets" element={<Rockets />} />
+          <Route path="/rockets/:id" element={<RocketDetail />} />
+          <Route path="/launches" element={<Launches />} />
+          <Route path="/launches/:id" element={<LaunchDetail />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/bases" element={<LaunchBases />} />
+          <Route path="/companies" element={<Companies />} />
+        </Routes>
+      </main>
+      {showFooter && (
         <footer className="bg-[#111] border-t border-gray-800">
           <div className="container mx-auto px-4 py-12">
             <div className="grid md:grid-cols-3 gap-8">
@@ -66,7 +70,15 @@ function App() {
             </div>
           </div>
         </footer>
-      </div>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

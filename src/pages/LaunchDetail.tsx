@@ -45,7 +45,7 @@ const LaunchDetail = () => {
 
   if (!launch) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-8 max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4">发射信息未找到</h1>
           <p className="text-gray-400 mb-6">请求的发射任务不存在。</p>
@@ -87,7 +87,7 @@ const LaunchDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-[#f0f0f0]">
+    <div className="min-h-screen bg-[#0a0a0a] text-[#f0f0f0]">
       {/* Hero Section */}
       <section className="relative h-[60vh] md:h-[70vh] flex items-end justify-center text-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -99,9 +99,9 @@ const LaunchDetail = () => {
             alt="火箭发射背景图" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-black/40"></div>
           <div className="absolute inset-x-0 bottom-0 h-1/2" style={{
-            background: 'linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0) 100%)'
+            background: 'linear-gradient(0deg, rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 0.7) 30%, rgba(10, 10, 10, 0) 100%)'
           }}></div>
         </div>
         <div className="relative z-10 p-4 pb-16 md:pb-24 container mx-auto">
@@ -259,7 +259,7 @@ const LaunchDetail = () => {
                 <div className="relative pl-8">
                   <div className="relative pb-8">
                     <div 
-                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-blue-600"
+                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
                     ></div>
                     <div 
                       className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
@@ -269,7 +269,7 @@ const LaunchDetail = () => {
                   </div>
                   <div className="relative pb-8">
                     <div 
-                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-blue-600"
+                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
                     ></div>
                     <div 
                       className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
@@ -279,7 +279,7 @@ const LaunchDetail = () => {
                   </div>
                   <div className="relative pb-8">
                     <div 
-                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-blue-600"
+                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
                     ></div>
                     <div 
                       className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
@@ -289,7 +289,7 @@ const LaunchDetail = () => {
                   </div>
                   <div className="relative pb-8">
                     <div 
-                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-blue-600"
+                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
                     ></div>
                     <div 
                       className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
@@ -300,7 +300,7 @@ const LaunchDetail = () => {
                   {rocket?.name.includes('Falcon') && (
                     <div className="relative pb-8">
                       <div 
-                        className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-blue-600"
+                        className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
                       ></div>
                       <div 
                         className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
@@ -311,7 +311,7 @@ const LaunchDetail = () => {
                   )}
                   <div className="relative">
                     <div 
-                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-blue-600"
+                      className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
                     ></div>
                     <p className="font-bold text-lg">T+01:04:29</p>
                     <p className="text-gray-400">载荷部署</p>
@@ -322,6 +322,47 @@ const LaunchDetail = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-[#111] border-t border-gray-800">
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-2">LaunchDate</h3>
+              <p className="text-gray-400">您全面的火箭发射、太空新闻和航空航天信息来源。</p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg mb-3">快速链接</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link to="/launches" className="hover:text-white">发射日历</Link></li>
+                <li><Link to="/rockets" className="hover:text-white">火箭资料库</Link></li>
+                <li><Link to="/news" className="hover:text-white">航天新闻</Link></li>
+                <li><Link to="/companies" className="hover:text-white">航天公司</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg mb-3">保持联系</h4>
+              <p className="text-gray-400 mb-4">订阅最新的发射更新和太空新闻。</p>
+              <form className="flex">
+                <input 
+                  type="email" 
+                  placeholder="您的邮箱" 
+                  className="w-full rounded-l-md bg-gray-800 border-gray-700 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button 
+                  type="submit" 
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 rounded-r-md"
+                >
+                  订阅
+                </button>
+              </form>
+            </div>
+          </div>
+          <div className="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 LaunchDate. All Rights Reserved. 数据来源仅供参考。</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
