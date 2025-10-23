@@ -55,7 +55,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero/Header Section */}
-      <section className="border-b bg-card py-12">
+      <section className="border-b bg-accent py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
@@ -78,7 +78,7 @@ const Home = () => {
 
       {/* Scrolling Banner - Upcoming Launches */}
       {upcomingLaunches.length > 0 && (
-        <section className="border-b bg-primary/5 py-6">
+        <section className="border-b bg-muted py-6">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl font-bold mb-4 text-center">Upcoming This Week</h2>
             <Link to={`/launches/${upcomingLaunches[currentLaunchIndex].id}`}>
@@ -158,7 +158,7 @@ const Home = () => {
       </section>
 
       {/* News Section */}
-      <section className="py-12 border-b bg-muted/30">
+      <section className="py-12 border-b bg-accent">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-3xl font-bold">Latest News</h2>
@@ -230,7 +230,7 @@ const Home = () => {
       </section>
 
       {/* Popular Companies */}
-      <section className="py-12 border-b bg-muted/30">
+      <section className="py-12 border-b bg-accent">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-3xl font-bold">Space Companies</h2>
