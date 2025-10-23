@@ -224,26 +224,25 @@ const Home = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {latestNews.map((article) => (
-              <div key={article.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg overflow-hidden hover:border-[#4a4a4a] hover:-translate-y-1 transition-all duration-300">
-                <div className="aspect-video bg-[#0a0a0a]">
-                  <img
-                    src={article.imageUrl}
-                    alt={article.title}
-                    className="w-full h-full object-cover"
-                  />
+              <Link key={article.id} to={`/news/${article.id}`}>
+                <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg overflow-hidden hover:border-[#4a4a4a] hover:-translate-y-1 transition-all duration-300">
+                  <div className="aspect-video bg-[#0a0a0a]">
+                    <img
+                      src={article.imageUrl}
+                      alt={article.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <p className="text-sm text-gray-400 mb-2">{formatDate(article.date)}</p>
+                    <h3 className="text-xl font-bold mb-3 line-clamp-2">{article.title}</h3>
+                    <p className="text-gray-400 line-clamp-3 mb-4">{article.summary}</p>
+                    <span className="text-blue-500 hover:text-blue-400 font-medium">
+                      Read More →
+                    </span>
+                  </div>
                 </div>
-                <div className="p-6">
-                  <p className="text-sm text-gray-400 mb-2">{formatDate(article.date)}</p>
-                  <h3 className="text-xl font-bold mb-3 line-clamp-2">{article.title}</h3>
-                  <p className="text-gray-400 line-clamp-3 mb-4">{article.summary}</p>
-                  <a 
-                    href={article.url} 
-                    className="text-blue-500 hover:text-blue-400 font-medium"
-                  >
-                    Read More →
-                  </a>
-                </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -47,10 +47,10 @@ const LaunchDetail = () => {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-8 max-w-md text-center">
-          <h1 className="text-2xl font-bold mb-4">发射信息未找到</h1>
-          <p className="text-gray-400 mb-6">请求的发射任务不存在。</p>
+          <h1 className="text-2xl font-bold mb-4">Launch Not Found</h1>
+          <p className="text-gray-400 mb-6">The requested launch does not exist.</p>
           <Button asChild className="bg-blue-600 hover:bg-blue-700">
-            <Link to="/launches">返回发射列表</Link>
+            <Link to="/launches">Back to Launches</Link>
           </Button>
         </div>
       </div>
@@ -62,7 +62,7 @@ const LaunchDetail = () => {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('zh-CN', {
+    return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -76,13 +76,13 @@ const LaunchDetail = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'successful':
-        return <Badge className="bg-green-600">✅ 成功</Badge>;
+        return <Badge className="bg-green-600">✅ Success</Badge>;
       case 'failed':
-        return <Badge className="bg-red-600">❌ 失败</Badge>;
+        return <Badge className="bg-red-600">❌ Failed</Badge>;
       case 'cancelled':
-        return <Badge className="bg-gray-600">🚫 取消</Badge>;
+        return <Badge className="bg-gray-600">🚫 Cancelled</Badge>;
       default:
-        return <Badge className="bg-blue-600">🕒 计划中</Badge>;
+        return <Badge className="bg-blue-600">🕒 Scheduled</Badge>;
     }
   };
 
@@ -96,7 +96,7 @@ const LaunchDetail = () => {
             onError={(e) => {
               e.currentTarget.src = 'https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?q=80&w=2574&auto=format&fit=crop';
             }}
-            alt="火箭发射背景图" 
+            alt="Rocket Launch Background" 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/40"></div>
@@ -116,7 +116,7 @@ const LaunchDetail = () => {
           {/* Countdown Timer - Only show for scheduled launches */}
           {launch.status === 'scheduled' && (
             <div>
-              <h2 className="text-lg md:text-xl font-medium text-gray-300 mb-4">发射倒计时</h2>
+              <h2 className="text-lg md:text-xl font-medium text-gray-300 mb-4">Launch Countdown</h2>
               <div className="flex justify-center gap-4 md:gap-6 mb-8">
                 <div className="rounded-lg px-4 py-3 md:px-6 md:py-4 min-w-[70px] md:min-w-[100px]" style={{
                   background: 'rgba(255, 255, 255, 0.05)',
@@ -125,7 +125,7 @@ const LaunchDetail = () => {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}>
                   <div className="text-3xl md:text-5xl font-bold">{String(countdown.days).padStart(2, '0')}</div>
-                  <div className="text-xs md:text-sm text-gray-400 mt-1">天</div>
+                  <div className="text-xs md:text-sm text-gray-400 mt-1">Days</div>
                 </div>
                 <div className="rounded-lg px-4 py-3 md:px-6 md:py-4 min-w-[70px] md:min-w-[100px]" style={{
                   background: 'rgba(255, 255, 255, 0.05)',
@@ -134,7 +134,7 @@ const LaunchDetail = () => {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}>
                   <div className="text-3xl md:text-5xl font-bold">{String(countdown.hours).padStart(2, '0')}</div>
-                  <div className="text-xs md:text-sm text-gray-400 mt-1">时</div>
+                  <div className="text-xs md:text-sm text-gray-400 mt-1">Hours</div>
                 </div>
                 <div className="rounded-lg px-4 py-3 md:px-6 md:py-4 min-w-[70px] md:min-w-[100px]" style={{
                   background: 'rgba(255, 255, 255, 0.05)',
@@ -143,7 +143,7 @@ const LaunchDetail = () => {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}>
                   <div className="text-3xl md:text-5xl font-bold">{String(countdown.minutes).padStart(2, '0')}</div>
-                  <div className="text-xs md:text-sm text-gray-400 mt-1">分</div>
+                  <div className="text-xs md:text-sm text-gray-400 mt-1">Minutes</div>
                 </div>
                 <div className="rounded-lg px-4 py-3 md:px-6 md:py-4 min-w-[70px] md:min-w-[100px]" style={{
                   background: 'rgba(255, 255, 255, 0.05)',
@@ -152,7 +152,7 @@ const LaunchDetail = () => {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}>
                   <div className="text-3xl md:text-5xl font-bold">{String(countdown.seconds).padStart(2, '0')}</div>
-                  <div className="text-xs md:text-sm text-gray-400 mt-1">秒</div>
+                  <div className="text-xs md:text-sm text-gray-400 mt-1">Seconds</div>
                 </div>
               </div>
             </div>
@@ -169,24 +169,24 @@ const LaunchDetail = () => {
               <div className="lg:col-span-2 space-y-6">
                 <div>
                   <Button asChild variant="ghost" className="mb-4 text-gray-300 hover:text-white">
-                    <Link to="/launches">← 返回发射列表</Link>
+                    <Link to="/launches">← Back to Launches</Link>
                   </Button>
-                  <h2 className="text-3xl font-bold mb-6">任务详情</h2>
+                  <h2 className="text-3xl font-bold mb-6">Mission Details</h2>
                   
                   {/* Mission Overview */}
                   <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-6 rounded-lg mb-6">
-                    <h3 className="text-xl font-bold mb-3">任务概况</h3>
+                    <h3 className="text-xl font-bold mb-3">Mission Overview</h3>
                     <p className="text-gray-300 mb-4">{launch.description}</p>
                     <ul className="grid sm:grid-cols-2 gap-4 text-gray-300">
-                      <li><strong>任务名称:</strong> {launch.name}</li>
-                      <li><strong>状态:</strong> {launch.status === 'successful' ? '成功' : launch.status === 'failed' ? '失败' : launch.status === 'cancelled' ? '取消' : '计划中'}</li>
-                      <li><strong>发射时间:</strong> {formatDate(launch.date)}</li>
-                      <li><strong>任务类型:</strong> {
-                        launch.name.includes('Starlink') ? '卫星部署' :
-                        launch.name.includes('Crew') ? '载人任务' :
-                        launch.name.includes('Cargo') || launch.name.includes('Dragon') ? '货运补给' :
-                        launch.name.includes('GPS') ? '导航卫星' :
-                        '通信卫星'
+                      <li><strong>Mission Name:</strong> {launch.name}</li>
+                      <li><strong>Status:</strong> {launch.status === 'successful' ? 'Success' : launch.status === 'failed' ? 'Failed' : launch.status === 'cancelled' ? 'Cancelled' : 'Scheduled'}</li>
+                      <li><strong>Launch Time:</strong> {formatDate(launch.date)}</li>
+                      <li><strong>Mission Type:</strong> {
+                        launch.name.includes('Starlink') ? 'Satellite Deployment' :
+                        launch.name.includes('Crew') ? 'Crewed Mission' :
+                        launch.name.includes('Cargo') || launch.name.includes('Dragon') ? 'Cargo Resupply' :
+                        launch.name.includes('GPS') ? 'Navigation Satellite' :
+                        'Communication Satellite'
                       }</li>
                     </ul>
                   </div>
@@ -194,7 +194,7 @@ const LaunchDetail = () => {
                   {/* Rocket Information */}
                   {rocket && (
                     <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-6 rounded-lg mb-6">
-                      <h3 className="text-xl font-bold mb-3">火箭信息</h3>
+                      <h3 className="text-xl font-bold mb-3">Rocket Information</h3>
                       <div className="flex flex-col sm:flex-row gap-6">
                         <div className="w-32 h-48 bg-[#0a0a0a] rounded-lg overflow-hidden flex-shrink-0">
                           <img src={rocket.imageUrl} alt={rocket.name} className="w-full h-full object-cover" />
@@ -204,12 +204,12 @@ const LaunchDetail = () => {
                           <p className="text-gray-400 mb-4">{rocket.company}</p>
                           <p className="text-gray-300 mb-4">{rocket.description}</p>
                           <ul className="grid grid-cols-3 gap-4 text-gray-300 mb-4">
-                            <li><strong>高度:</strong> {rocket.height}m</li>
-                            <li><strong>直径:</strong> {rocket.diameter}m</li>
-                            <li><strong>质量:</strong> {(rocket.mass / 1000).toFixed(0)}t</li>
+                            <li><strong>Height:</strong> {rocket.height}m</li>
+                            <li><strong>Diameter:</strong> {rocket.diameter}m</li>
+                            <li><strong>Mass:</strong> {(rocket.mass / 1000).toFixed(0)}t</li>
                           </ul>
                           <Button asChild className="bg-blue-600 hover:bg-blue-700">
-                            <Link to={`/rockets/${rocket.id}`}>查看火箭详情 →</Link>
+                            <Link to={`/rockets/${rocket.id}`}>View Rocket Details →</Link>
                           </Button>
                         </div>
                       </div>
@@ -219,33 +219,33 @@ const LaunchDetail = () => {
                   {/* Launch Site */}
                   {launchBase && (
                     <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-6 rounded-lg mb-6">
-                      <h3 className="text-xl font-bold mb-3">发射场信息</h3>
+                      <h3 className="text-xl font-bold mb-3">Launch Site Information</h3>
                       <h4 className="text-2xl font-bold mb-2">{launchBase.name}</h4>
                       <p className="text-gray-400 mb-4">{launchBase.location}</p>
                       <p className="text-gray-300 mb-4">{launchBase.description}</p>
                       <ul className="grid sm:grid-cols-2 gap-4 text-gray-300">
-                        <li><strong>国家:</strong> {launchBase.country}</li>
-                        <li><strong>坐标:</strong> {launchBase.latitude.toFixed(4)}°N, {Math.abs(launchBase.longitude).toFixed(4)}°W</li>
+                        <li><strong>Country:</strong> {launchBase.country}</li>
+                        <li><strong>Coordinates:</strong> {launchBase.latitude.toFixed(4)}°N, {Math.abs(launchBase.longitude).toFixed(4)}°W</li>
                       </ul>
                     </div>
                   )}
 
                   {/* Additional Information */}
                   <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-6 rounded-lg">
-                    <h3 className="text-xl font-bold mb-3">载荷信息</h3>
+                    <h3 className="text-xl font-bold mb-3">Payload Information</h3>
                     <ul className="grid sm:grid-cols-2 gap-4 text-gray-300">
-                      <li><strong>发射提供商:</strong> {rocket?.company || 'N/A'}</li>
-                      <li><strong>目标轨道:</strong> {
-                        launch.name.includes('Starlink') || launch.name.includes('OneWeb') ? '近地轨道 (LEO)' :
-                        launch.name.includes('GPS') || launch.name.includes('SES') ? '地球同步轨道 (GEO)' :
-                        launch.name.includes('ISS') || launch.name.includes('Dragon') || launch.name.includes('Crew') ? '近地轨道 (LEO) - ISS' :
-                        launch.name.includes('Moon') || launch.name.includes('Artemis') ? '月球转移轨道' :
-                        '近地轨道 (LEO)'
+                      <li><strong>Launch Provider:</strong> {rocket?.company || 'N/A'}</li>
+                      <li><strong>Target Orbit:</strong> {
+                        launch.name.includes('Starlink') || launch.name.includes('OneWeb') ? 'Low Earth Orbit (LEO)' :
+                        launch.name.includes('GPS') || launch.name.includes('SES') ? 'Geostationary Orbit (GEO)' :
+                        launch.name.includes('ISS') || launch.name.includes('Dragon') || launch.name.includes('Crew') ? 'Low Earth Orbit (LEO) - ISS' :
+                        launch.name.includes('Moon') || launch.name.includes('Artemis') ? 'Trans-Lunar Injection' :
+                        'Low Earth Orbit (LEO)'
                       }</li>
                       {rocket?.name.includes('Falcon') && (
                         <>
-                          <li><strong>一级回收:</strong> 是</li>
-                          <li><strong>整流罩回收:</strong> 是</li>
+                          <li><strong>First Stage Recovery:</strong> Yes</li>
+                          <li><strong>Fairing Recovery:</strong> Yes</li>
                         </>
                       )}
                     </ul>
@@ -255,7 +255,7 @@ const LaunchDetail = () => {
 
               {/* Right Column: Timeline */}
               <div>
-                <h2 className="text-3xl font-bold mb-6">发射流程</h2>
+                <h2 className="text-3xl font-bold mb-6">Launch Timeline</h2>
                 <div className="relative pl-8">
                   <div className="relative pb-8">
                     <div 
@@ -265,7 +265,7 @@ const LaunchDetail = () => {
                       className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
                     ></div>
                     <p className="font-bold text-lg">T-00:00:00</p>
-                    <p className="text-gray-400">{rocket?.name || '火箭'}点火升空</p>
+                    <p className="text-gray-400">{rocket?.name || 'Rocket'} Liftoff</p>
                   </div>
                   <div className="relative pb-8">
                     <div 
@@ -275,7 +275,7 @@ const LaunchDetail = () => {
                       className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
                     ></div>
                     <p className="font-bold text-lg">T+00:01:12</p>
-                    <p className="text-gray-400">通过 Max-Q (最大动压点)</p>
+                    <p className="text-gray-400">Pass through Max-Q</p>
                   </div>
                   <div className="relative pb-8">
                     <div 
@@ -285,7 +285,7 @@ const LaunchDetail = () => {
                       className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
                     ></div>
                     <p className="font-bold text-lg">T+00:02:27</p>
-                    <p className="text-gray-400">一级主引擎关闭 (MECO)</p>
+                    <p className="text-gray-400">Main Engine Cutoff (MECO)</p>
                   </div>
                   <div className="relative pb-8">
                     <div 
@@ -295,7 +295,7 @@ const LaunchDetail = () => {
                       className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
                     ></div>
                     <p className="font-bold text-lg">T+00:02:31</p>
-                    <p className="text-gray-400">一二级分离</p>
+                    <p className="text-gray-400">Stage Separation</p>
                   </div>
                   {rocket?.name.includes('Falcon') && (
                     <div className="relative pb-8">
@@ -306,7 +306,7 @@ const LaunchDetail = () => {
                         className="absolute -left-[21px] top-[5px] bottom-[-5px] w-0.5 bg-[#2a2a2a]"
                       ></div>
                       <p className="font-bold text-lg">T+00:08:45</p>
-                      <p className="text-gray-400">一级助推器着陆</p>
+                      <p className="text-gray-400">First Stage Landing</p>
                     </div>
                   )}
                   <div className="relative">
@@ -314,7 +314,7 @@ const LaunchDetail = () => {
                       className="absolute -left-[30px] top-[5px] w-5 h-5 rounded-full bg-[#2a2a2a] border-4 border-[#007bff]"
                     ></div>
                     <p className="font-bold text-lg">T+01:04:29</p>
-                    <p className="text-gray-400">载荷部署</p>
+                    <p className="text-gray-400">Payload Deployment</p>
                   </div>
                 </div>
               </div>
@@ -329,37 +329,37 @@ const LaunchDetail = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-2">LaunchDate</h3>
-              <p className="text-gray-400">您全面的火箭发射、太空新闻和航空航天信息来源。</p>
+              <p className="text-gray-400">Your comprehensive source for rocket launches, space news, and aerospace information.</p>
             </div>
             <div>
-              <h4 className="font-semibold text-lg mb-3">快速链接</h4>
+              <h4 className="font-semibold text-lg mb-3">Quick Links</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><Link to="/launches" className="hover:text-white">发射日历</Link></li>
-                <li><Link to="/rockets" className="hover:text-white">火箭资料库</Link></li>
-                <li><Link to="/news" className="hover:text-white">航天新闻</Link></li>
-                <li><Link to="/companies" className="hover:text-white">航天公司</Link></li>
+                <li><Link to="/launches" className="hover:text-white">Launch Dates</Link></li>
+                <li><Link to="/rockets" className="hover:text-white">Rockets</Link></li>
+                <li><Link to="/news" className="hover:text-white">News</Link></li>
+                <li><Link to="/companies" className="hover:text-white">Companies</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-lg mb-3">保持联系</h4>
-              <p className="text-gray-400 mb-4">订阅最新的发射更新和太空新闻。</p>
+              <h4 className="font-semibold text-lg mb-3">Stay Connected</h4>
+              <p className="text-gray-400 mb-4">Subscribe for the latest launch updates and space news.</p>
               <form className="flex">
                 <input 
                   type="email" 
-                  placeholder="您的邮箱" 
+                  placeholder="Your email" 
                   className="w-full rounded-l-md bg-gray-800 border-gray-700 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <button 
                   type="submit" 
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 rounded-r-md"
                 >
-                  订阅
+                  Subscribe
                 </button>
               </form>
             </div>
           </div>
           <div className="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-            <p>&copy; 2025 LaunchDate. All Rights Reserved. 数据来源仅供参考。</p>
+            <p>&copy; 2025 LaunchDate. All Rights Reserved.</p>
           </div>
         </div>
       </footer>

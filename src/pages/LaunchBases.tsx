@@ -1,46 +1,62 @@
+import { Link } from 'react-router-dom';
 import { launchBases } from '../data/sampleData';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 const LaunchBases = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <div className="border-b bg-card py-12">
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* Page Hero */}
+      <section className="py-16 md:py-24 text-center bg-[#111]">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-2">Launch Sites</h1>
-          <p className="text-xl text-muted-foreground">Explore the facilities where rockets are launched into space</p>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">Launch Sites</h1>
+          <p className="max-w-3xl mx-auto text-lg md:text-xl text-gray-400">
+            Explore the facilities where rockets are launched into space
+          </p>
         </div>
-      </div>
+      </section>
 
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          {launchBases.map((base) => (
-            <Card key={base.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="aspect-video bg-muted">
-                <img src={base.imageUrl} alt={base.name} className="w-full h-full object-cover" />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-2xl">{base.name}</CardTitle>
-                <CardDescription className="text-base flex items-center gap-2">
-                  <span>📍</span>
-                  <span>{base.location}, {base.country}</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground">{base.description}</p>
-                <div className="flex gap-4">
-                  <Badge variant="outline">
-                    Lat: {base.latitude.toFixed(4)}°
-                  </Badge>
-                  <Badge variant="outline">
-                    Long: {base.longitude.toFixed(4)}°
-                  </Badge>
+      {/* Launch Bases Grid */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {launchBases.map((base) => (
+              <Link key={base.id} to={`/bases/${base.id}`}>
+                <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg overflow-hidden hover:border-[#4a4a4a] hover:-translate-y-1 transition-all duration-300 cursor-pointer h-full flex flex-col">
+                  <div className="aspect-video bg-[#0a0a0a]">
+                    <img 
+                      src={base.imageUrl} 
+                      alt={base.name} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-2xl font-bold mb-2">{base.name}</h3>
+                    <p className="text-sm text-gray-400 mb-4 flex items-center gap-2">
+                      <span>📍</span>
+                      <span>{base.location}, {base.country}</span>
+                    </p>
+                    <p className="text-gray-300 mb-4 flex-grow">{base.description}</p>
+                    
+                    <div className="border-t border-[#2a2a2a] pt-4 mt-auto">
+                      <div className="flex gap-2 mb-4">
+                        <Badge variant="secondary" className="bg-[#2a2a2a]">
+                          Lat: {base.latitude.toFixed(4)}°
+                        </Badge>
+                        <Badge variant="secondary" className="bg-[#2a2a2a]">
+                          Long: {base.longitude.toFixed(4)}°
+                        </Badge>
+                      </div>
+                      <Badge variant="secondary" className="w-full justify-center py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a]">
+                        View Details →
+                      </Badge>
+                    </div>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
