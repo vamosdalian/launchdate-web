@@ -13,10 +13,10 @@ const RocketDetail = () => {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-8 max-w-md text-center">
-          <h1 className="text-2xl font-bold mb-4 text-white">火箭信息未找到</h1>
-          <p className="text-gray-400 mb-6">请求的火箭不存在。</p>
+          <h1 className="text-2xl font-bold mb-4 text-white">Rocket Not Found</h1>
+          <p className="text-gray-400 mb-6">The requested rocket does not exist.</p>
           <Button asChild className="bg-blue-600 hover:bg-blue-700">
-            <Link to="/rockets">返回火箭列表</Link>
+            <Link to="/rockets">Back to Rockets</Link>
           </Button>
         </div>
       </div>
@@ -29,7 +29,7 @@ const RocketDetail = () => {
       chineseName: '',
       manufacturer: rocket.company,
       firstFlight: '',
-      status: rocket.active ? '现役' : '退役',
+      status: rocket.active ? 'Active' : 'Retired',
       stages: 2,
       reusable: false,
       leoCapacity: '',
@@ -43,68 +43,68 @@ const RocketDetail = () => {
       case 'Falcon 9':
         return {
           ...commonData,
-          chineseName: '猎鹰9号',
-          firstFlight: '2010年6月',
+          chineseName: 'Falcon 9',
+          firstFlight: 'June 2010',
           reusable: true,
           leoCapacity: '22,800 kg',
           gtoCapacity: '8,300 kg',
-          engines: '第一级: 9台梅林1D引擎, 第二级: 1台真空梅林1D引擎',
-          propellant: 'RP-1 (火箭推进剂-1) / 液氧',
+          engines: 'Stage 1: 9x Merlin 1D engines, Stage 2: 1x Merlin 1D Vacuum engine',
+          propellant: 'RP-1 (Rocket Propellant-1) / Liquid Oxygen',
           timeline: [
-            { year: '2010', event: '首次轨道飞行', description: '首次发射即成功进入轨道' },
-            { year: '2012', event: '商业货运', description: '首次商业货运任务前往国际空间站' },
-            { year: '2015', event: '首次成功着陆', description: '成为首个垂直着陆的轨道级火箭助推器' },
-            { year: '2020', event: '载人航天', description: '首次载人发射，送宇航员前往国际空间站' },
-            { year: '2023', event: '世界最繁忙火箭', description: '成为全球发射频率最高的火箭' },
+            { year: '2010', event: 'First Orbital Flight', description: 'Successfully reached orbit on maiden flight' },
+            { year: '2012', event: 'Commercial Cargo', description: 'First commercial cargo mission to ISS' },
+            { year: '2015', event: 'First Successful Landing', description: 'First orbital-class rocket booster to land vertically' },
+            { year: '2020', event: 'Crewed Spaceflight', description: 'First crewed launch sending astronauts to ISS' },
+            { year: '2023', event: 'World\'s Busiest Rocket', description: 'Became the most frequently launched rocket globally' },
           ],
         };
       case 'Falcon Heavy':
         return {
           ...commonData,
-          chineseName: '猎鹰重型',
-          firstFlight: '2018年2月',
+          chineseName: 'Falcon Heavy',
+          firstFlight: 'February 2018',
           reusable: true,
           leoCapacity: '63,800 kg',
           gtoCapacity: '26,700 kg',
-          engines: '第一级: 27台梅林1D引擎, 第二级: 1台真空梅林1D引擎',
-          propellant: 'RP-1 (火箭推进剂-1) / 液氧',
+          engines: 'Stage 1: 27x Merlin 1D engines, Stage 2: 1x Merlin 1D Vacuum engine',
+          propellant: 'RP-1 (Rocket Propellant-1) / Liquid Oxygen',
           timeline: [
-            { year: '2018', event: '首次发射', description: '成功发射并搭载特斯拉跑车作为载荷' },
-            { year: '2019', event: '商业发射', description: '首次商业发射任务' },
-            { year: '2023', event: '现役最强火箭', description: '成为现役运载能力最强的火箭' },
+            { year: '2018', event: 'First Launch', description: 'Successfully launched with Tesla Roadster as payload' },
+            { year: '2019', event: 'Commercial Launch', description: 'First commercial launch mission' },
+            { year: '2023', event: 'Most Powerful Operational Rocket', description: 'Became the most powerful operational rocket' },
           ],
         };
       case 'Starship':
         return {
           ...commonData,
-          chineseName: '星舰',
-          firstFlight: '2023年4月',
+          chineseName: 'Starship',
+          firstFlight: 'April 2023',
           reusable: true,
-          leoCapacity: '100-150 吨 (预计)',
-          gtoCapacity: '待定',
-          engines: '超重型助推器: 33台猛禽引擎, 星舰: 6台猛禽引擎',
-          propellant: '液态甲烷 / 液氧',
+          leoCapacity: '100-150 tons (projected)',
+          gtoCapacity: 'TBD',
+          engines: 'Super Heavy Booster: 33x Raptor engines, Starship: 6x Raptor engines',
+          propellant: 'Liquid Methane / Liquid Oxygen',
           timeline: [
-            { year: '2018', event: '开始研发', description: '全可重复使用发射系统设计与测试开始' },
-            { year: '2023', event: '首次集成飞行测试', description: '首次尝试发射完整组装的飞行器' },
-            { year: '2024', event: '持续测试', description: '多次飞行测试，不断改进系统' },
+            { year: '2018', event: 'Development Begins', description: 'Design and testing of fully reusable launch system begins' },
+            { year: '2023', event: 'First Integrated Flight Test', description: 'First attempt to launch fully stacked vehicle' },
+            { year: '2024', event: 'Continued Testing', description: 'Multiple flight tests with ongoing system improvements' },
           ],
         };
       case 'New Shepard':
         return {
           ...commonData,
-          chineseName: '新谢泼德',
-          firstFlight: '2015年4月',
+          chineseName: 'New Shepard',
+          firstFlight: 'April 2015',
           reusable: true,
           stages: 1,
-          leoCapacity: '亚轨道飞行器 (非低地球轨道设计)',
-          gtoCapacity: '不适用',
-          engines: '助推器: 1台BE-3引擎, 太空舱: 1台BE-3PM引擎',
-          propellant: '液氢 / 液氧',
+          leoCapacity: 'Suborbital vehicle (not designed for LEO)',
+          gtoCapacity: 'N/A',
+          engines: 'Booster: 1x BE-3 engine, Capsule: 1x BE-3PM engine',
+          propellant: 'Liquid Hydrogen / Liquid Oxygen',
           timeline: [
-            { year: '2015', event: '首次飞行', description: '亚轨道飞行器首次测试飞行' },
-            { year: '2021', event: '首次载人飞行', description: 'Jeff Bezos及团队成为首批乘客' },
-            { year: '2022', event: '商业太空旅游', description: '持续开展商业太空旅游业务' },
+            { year: '2015', event: 'First Flight', description: 'First test flight of suborbital vehicle' },
+            { year: '2021', event: 'First Crewed Flight', description: 'Jeff Bezos and crew become first passengers' },
+            { year: '2022', event: 'Commercial Space Tourism', description: 'Ongoing commercial space tourism operations' },
           ],
         };
       default:
@@ -134,11 +134,11 @@ const RocketDetail = () => {
           <div className="space-y-6">
             <div>
               <h1 className="text-5xl md:text-6xl font-black text-white mb-2">
-                {rocketData.chineseName || rocket.name}
+                {rocket.name}
               </h1>
-              <p className="text-2xl text-gray-400 mb-4">{rocket.name}</p>
+              <p className="text-2xl text-gray-400 mb-4">{rocket.company}</p>
               {rocket.active && (
-                <Badge className="bg-green-600 text-white px-4 py-1 text-sm">✓ 现役</Badge>
+                <Badge className="bg-green-600 text-white px-4 py-1 text-sm">✓ Active</Badge>
               )}
             </div>
 
@@ -149,29 +149,29 @@ const RocketDetail = () => {
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 gap-4 pt-4">
               <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-4">
-                <p className="text-sm text-gray-400 mb-1">高度</p>
+                <p className="text-sm text-gray-400 mb-1">Height</p>
                 <p className="text-3xl font-bold text-white">{rocket.height}m</p>
               </div>
               <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-4">
-                <p className="text-sm text-gray-400 mb-1">直径</p>
+                <p className="text-sm text-gray-400 mb-1">Diameter</p>
                 <p className="text-3xl font-bold text-white">{rocket.diameter}m</p>
               </div>
               <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-4">
-                <p className="text-sm text-gray-400 mb-1">质量</p>
+                <p className="text-sm text-gray-400 mb-1">Mass</p>
                 <p className="text-3xl font-bold text-white">{(rocket.mass / 1000).toFixed(0)}t</p>
               </div>
               <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-4">
-                <p className="text-sm text-gray-400 mb-1">首飞</p>
-                <p className="text-xl font-bold text-white">{rocketData.firstFlight || '待定'}</p>
+                <p className="text-sm text-gray-400 mb-1">First Flight</p>
+                <p className="text-xl font-bold text-white">{rocketData.firstFlight || 'TBD'}</p>
               </div>
             </div>
 
             <div className="flex gap-4 pt-4">
               <Button asChild className="bg-blue-600 hover:bg-blue-700">
-                <Link to="/launches">查看发射记录</Link>
+                <Link to="/launches">View Launch History</Link>
               </Button>
               <Button asChild variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800">
-                <Link to="/rockets">返回列表</Link>
+                <Link to="/rockets">Back to List</Link>
               </Button>
             </div>
           </div>
@@ -191,7 +191,7 @@ const RocketDetail = () => {
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              概述
+              Overview
             </button>
             <button
               onClick={() => setActiveTab('timeline')}
@@ -201,7 +201,7 @@ const RocketDetail = () => {
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              发展历程
+              Timeline
             </button>
             <button
               onClick={() => setActiveTab('engines')}
@@ -211,7 +211,7 @@ const RocketDetail = () => {
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              引擎系统
+              Engine Systems
             </button>
             <button
               onClick={() => setActiveTab('reusability')}
@@ -221,7 +221,7 @@ const RocketDetail = () => {
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              可重复性
+              Reusability
             </button>
           </div>
 
@@ -231,37 +231,37 @@ const RocketDetail = () => {
             {activeTab === 'overview' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-4">技术规格</h3>
+                  <h3 className="text-2xl font-bold text-white mb-4">Technical Specifications</h3>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-3">
                       <div>
-                        <p className="text-sm text-gray-400">制造商</p>
+                        <p className="text-sm text-gray-400">Manufacturer</p>
                         <p className="text-lg text-white">{rocketData.manufacturer}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-400">状态</p>
+                        <p className="text-sm text-gray-400">Status</p>
                         <p className="text-lg text-white">{rocketData.status}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-400">级数</p>
-                        <p className="text-lg text-white">{rocketData.stages}级</p>
+                        <p className="text-sm text-gray-400">Stages</p>
+                        <p className="text-lg text-white">{rocketData.stages} stage{rocketData.stages > 1 ? 's' : ''}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-400">可重复使用</p>
-                        <p className="text-lg text-white">{rocketData.reusable ? '是' : '否'}</p>
+                        <p className="text-sm text-gray-400">Reusable</p>
+                        <p className="text-lg text-white">{rocketData.reusable ? 'Yes' : 'No'}</p>
                       </div>
                     </div>
                     <div className="space-y-3">
                       <div>
-                        <p className="text-sm text-gray-400">近地轨道运载能力 (LEO)</p>
+                        <p className="text-sm text-gray-400">LEO Payload Capacity</p>
                         <p className="text-lg text-white">{rocketData.leoCapacity}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-400">地球同步转移轨道 (GTO)</p>
+                        <p className="text-sm text-gray-400">GTO Payload Capacity</p>
                         <p className="text-lg text-white">{rocketData.gtoCapacity}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-400">推进剂</p>
+                        <p className="text-sm text-gray-400">Propellant</p>
                         <p className="text-lg text-white">{rocketData.propellant}</p>
                       </div>
                     </div>
@@ -273,7 +273,7 @@ const RocketDetail = () => {
             {/* Timeline Tab */}
             {activeTab === 'timeline' && (
               <div className="space-y-6">
-                <h3 className="text-2xl font-bold text-white mb-6">发展历程</h3>
+                <h3 className="text-2xl font-bold text-white mb-6">Development Timeline</h3>
                 <div className="space-y-8">
                   {rocketData.timeline.map((item, index) => (
                     <div key={index} className="flex gap-6 items-start">
@@ -295,23 +295,23 @@ const RocketDetail = () => {
             {/* Engines Tab */}
             {activeTab === 'engines' && (
               <div className="space-y-6">
-                <h3 className="text-2xl font-bold text-white mb-4">引擎配置</h3>
+                <h3 className="text-2xl font-bold text-white mb-4">Engine Configuration</h3>
                 <div className="space-y-4">
                   <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg p-6">
                     <p className="text-lg text-white mb-2">{rocketData.engines}</p>
                     <p className="text-gray-400">
                       {rocket.name === 'Falcon 9' && 
-                        '第一级的9台梅林1D引擎以八边形网格排列，提供强大的推力。第二级使用一台真空优化的梅林引擎，配备更大的喷管，负责将载荷送入最终轨道。'}
+                        'The first stage features 9 Merlin 1D engines arranged in an octagonal grid pattern, providing powerful thrust. The second stage uses a single vacuum-optimized Merlin engine with a larger nozzle to deliver payloads to their final orbit.'}
                       {rocket.name === 'Falcon Heavy' && 
-                        '由三个猎鹰9号第一级捆绑而成，总共27台梅林1D引擎，使其成为现役运力最强的火箭。'}
+                        'Composed of three Falcon 9 first stages strapped together, totaling 27 Merlin 1D engines, making it the most powerful operational rocket.'}
                       {rocket.name === 'Starship' && 
-                        '超重型助推器使用33台猛禽引擎，星舰上级使用6台猛禽引擎（3台海平面版本，3台真空版本）。猛禽引擎采用全流量分级燃烧循环，是SpaceX最先进的火箭引擎。'}
+                        'The Super Heavy booster uses 33 Raptor engines, while the Starship upper stage uses 6 Raptor engines (3 sea-level versions and 3 vacuum versions). The Raptor engine employs a full-flow staged combustion cycle, making it SpaceX\'s most advanced rocket engine.'}
                       {rocket.name === 'New Shepard' && 
-                        'BE-3引擎使用液氢和液氧作为推进剂，是一种高效清洁的引擎设计，适合可重复使用的亚轨道飞行。'}
+                        'The BE-3 engine uses liquid hydrogen and liquid oxygen as propellants, an efficient and clean engine design suitable for reusable suborbital flight.'}
                     </p>
                   </div>
                   <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg p-6">
-                    <h4 className="text-lg font-semibold text-white mb-2">推进剂系统</h4>
+                    <h4 className="text-lg font-semibold text-white mb-2">Propellant System</h4>
                     <p className="text-gray-400">{rocketData.propellant}</p>
                   </div>
                 </div>
@@ -321,33 +321,33 @@ const RocketDetail = () => {
             {/* Reusability Tab */}
             {activeTab === 'reusability' && (
               <div className="space-y-6">
-                <h3 className="text-2xl font-bold text-white mb-4">可重复使用技术</h3>
+                <h3 className="text-2xl font-bold text-white mb-4">Reusability Technology</h3>
                 {rocketData.reusable ? (
                   <div className="space-y-4">
                     <p className="text-gray-300">
                       {rocket.name.includes('Falcon') && 
-                        '猎鹰系列火箭最显著的特点是其第一级助推器能够在发射后受控返回地球。通过使用剩余的推进剂、冷气体推进器和格栅舵，助推器可以精确地降落在陆地上的着陆区或在海上的自主无人驾驶驳船上。'}
+                        'The most notable feature of the Falcon series rockets is that the first-stage booster can return to Earth in a controlled manner after launch. By using residual propellant, cold gas thrusters, and grid fins, the booster can precisely land on landing zones on land or autonomous drone ships at sea.'}
                       {rocket.name === 'Starship' && 
-                        '星舰是世界上第一个设计为完全可重复使用的轨道级火箭系统。超重型助推器和星舰上级都设计为可以返回并着陆，实现快速周转和重复使用。'}
+                        'Starship is the world\'s first fully reusable orbital-class rocket system. Both the Super Heavy booster and Starship upper stage are designed to return and land, enabling rapid turnaround and reuse.'}
                       {rocket.name === 'New Shepard' && 
-                        '新谢泼德的助推器和太空舱都设计为可重复使用。助推器通过垂直着陆回收，太空舱则使用降落伞安全返回地面。'}
+                        'Both the New Shepard booster and capsule are designed to be reusable. The booster is recovered through vertical landing, while the capsule safely returns to Earth using parachutes.'}
                     </p>
                     <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg p-6">
-                      <h4 className="text-lg font-semibold text-white mb-2">回收记录</h4>
+                      <h4 className="text-lg font-semibold text-white mb-2">Recovery Record</h4>
                       <p className="text-gray-400">
                         {rocket.name === 'Falcon 9' && 
-                          'SpaceX已经成功回收和复飞助推器数百次，部分助推器的单枚复飞次数已超过20次，这从根本上改变了航天发射的经济格局。'}
+                          'SpaceX has successfully recovered and reflown boosters hundreds of times, with some boosters having flown more than 20 times, fundamentally changing the economics of space launch.'}
                         {rocket.name === 'Falcon Heavy' && 
-                          '猎鹰重型可以回收其三个第一级助推器，两个侧助推器通常降落在陆地着陆区，中心核心助推器降落在海上驳船。'}
+                          'Falcon Heavy can recover all three of its first-stage boosters, with the two side boosters typically landing at ground landing zones and the center core landing on a drone ship at sea.'}
                         {rocket.name === 'Starship' && 
-                          '星舰正在开发和测试阶段，目标是实现完全快速可重复使用，最终目标是在发射后数小时内重新发射。'}
+                          'Starship is in the development and testing phase, with the goal of achieving fully rapid reusability, ultimately aiming to relaunch within hours of a previous flight.'}
                         {rocket.name === 'New Shepard' && 
-                          '新谢泼德已经多次成功回收和重复使用助推器和太空舱，展示了亚轨道飞行器的可重复使用能力。'}
+                          'New Shepard has successfully recovered and reused both boosters and capsules multiple times, demonstrating the reusability capabilities of suborbital vehicles.'}
                       </p>
                     </div>
                   </div>
                 ) : (
-                  <p className="text-gray-400">此火箭不具备可重复使用能力。</p>
+                  <p className="text-gray-400">This rocket does not have reusability capabilities.</p>
                 )}
               </div>
             )}
