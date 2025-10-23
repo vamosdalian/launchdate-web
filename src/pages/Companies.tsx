@@ -1,52 +1,63 @@
+import { Link } from 'react-router-dom';
 import { companies } from '../data/sampleData';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 
 const Companies = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <div className="border-b bg-card py-12">
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* Page Hero */}
+      <section className="py-16 md:py-24 text-center bg-[#111]">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-2">Space Companies</h1>
-          <p className="text-xl text-muted-foreground">Meet the organizations leading the charge in space exploration</p>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">Space Companies</h1>
+          <p className="max-w-3xl mx-auto text-lg md:text-xl text-gray-400">
+            Meet the organizations leading the charge in space exploration
+          </p>
         </div>
-      </div>
+      </section>
 
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          {companies.map((company) => (
-            <Card key={company.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="aspect-video bg-muted">
-                <img src={company.imageUrl} alt={company.name} className="w-full h-full object-cover" />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-2xl">{company.name}</CardTitle>
-                <CardDescription className="text-base">Founded {company.founded} by {company.founder}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground">{company.description}</p>
-                <Separator />
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="text-muted-foreground">Headquarters</p>
-                    <p className="font-semibold">{company.headquarters}</p>
+      {/* Companies Grid */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {companies.map((company) => (
+              <Link key={company.id} to={`/companies/${company.id}`}>
+                <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg overflow-hidden hover:border-[#4a4a4a] hover:-translate-y-1 transition-all duration-300 cursor-pointer h-full flex flex-col">
+                  <div className="aspect-video bg-[#0a0a0a]">
+                    <img 
+                      src={company.imageUrl} 
+                      alt={company.name} 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div>
-                    <p className="text-muted-foreground">Employees</p>
-                    <p className="font-semibold">{company.employees.toLocaleString()}</p>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-2xl font-bold mb-2">{company.name}</h3>
+                    <p className="text-sm text-gray-400 mb-4">
+                      Founded {company.founded} by {company.founder}
+                    </p>
+                    <p className="text-gray-300 mb-4 flex-grow">{company.description}</p>
+                    
+                    <div className="border-t border-[#2a2a2a] pt-4 mt-auto">
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">Headquarters</p>
+                          <p className="text-sm font-semibold">{company.headquarters}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">Employees</p>
+                          <p className="text-sm font-semibold">{company.employees.toLocaleString()}</p>
+                        </div>
+                      </div>
+                      <Badge variant="secondary" className="w-full justify-center py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a]">
+                        View Details →
+                      </Badge>
+                    </div>
                   </div>
                 </div>
-                <Button asChild variant="outline" className="w-full">
-                  <a href={company.website} target="_blank" rel="noopener noreferrer">
-                    Visit Website →
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

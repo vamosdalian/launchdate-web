@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { news } from '../data/sampleData';
 
 const News = () => {
@@ -35,70 +36,61 @@ const News = () => {
             <div className="w-full lg:w-2/3">
               {/* Featured Article */}
               {featuredArticle && (
-                <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden mb-12 hover:border-[#4a4a4a] hover:-translate-y-1 transition-all duration-300">
-                  <img 
-                    src={featuredArticle.imageUrl} 
-                    alt={featuredArticle.title} 
-                    className="w-full h-auto object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = 'https://images.unsplash.com/photo-1630343719250-6c9d0407420c?q=80&w=1200&auto=format&fit=crop';
-                    }}
-                  />
-                  <div className="p-8">
-                    <div className="flex items-center gap-4 mb-3">
-                      <span className="text-sm font-semibold text-blue-400">精选报道</span>
-                      <span className="text-sm text-gray-400">{formatDate(featuredArticle.date)}</span>
+                <Link to={`/news/${featuredArticle.id}`}>
+                  <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden mb-12 hover:border-[#4a4a4a] hover:-translate-y-1 transition-all duration-300">
+                    <img 
+                      src={featuredArticle.imageUrl} 
+                      alt={featuredArticle.title} 
+                      className="w-full h-auto object-cover"
+                      onError={(e) => {
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1630343719250-6c9d0407420c?q=80&w=1200&auto=format&fit=crop';
+                      }}
+                    />
+                    <div className="p-8">
+                      <div className="flex items-center gap-4 mb-3">
+                        <span className="text-sm font-semibold text-blue-400">精选报道</span>
+                        <span className="text-sm text-gray-400">{formatDate(featuredArticle.date)}</span>
+                      </div>
+                      <h2 className="text-3xl font-bold mb-4 hover:text-blue-400 transition-colors">
+                        {featuredArticle.title}
+                      </h2>
+                      <p className="text-gray-400 mb-6 text-lg">{featuredArticle.summary}</p>
+                      <span className="font-semibold text-blue-400 hover:text-blue-300 transition-colors">
+                        阅读全文 →
+                      </span>
                     </div>
-                    <h2 className="text-3xl font-bold mb-4 hover:text-blue-400 transition-colors">
-                      <a href={featuredArticle.url} target="_blank" rel="noopener noreferrer">{featuredArticle.title}</a>
-                    </h2>
-                    <p className="text-gray-400 mb-6 text-lg">{featuredArticle.summary}</p>
-                    <a 
-                      href={featuredArticle.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="font-semibold text-blue-400 hover:text-blue-300 transition-colors"
-                    >
-                      阅读全文 →
-                    </a>
                   </div>
-                </div>
+                </Link>
               )}
 
               {/* News Grid */}
               <div className="grid md:grid-cols-2 gap-6">
                 {regularNews.map((article) => (
-                  <div 
-                    key={article.id} 
-                    className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden flex flex-col hover:border-[#4a4a4a] hover:-translate-y-1 transition-all duration-300"
-                  >
-                    <img 
-                      src={article.imageUrl} 
-                      alt={article.title} 
-                      className="w-full h-48 object-cover"
-                      onError={(e) => {
-                        e.currentTarget.src = 'https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=800&auto=format&fit=crop';
-                      }}
-                    />
-                    <div className="p-6 flex flex-col flex-grow">
-                      <div className="flex items-center gap-4 mb-2">
-                        <span className="text-sm font-semibold text-blue-400">太空新闻</span>
-                        <span className="text-sm text-gray-400">{formatDate(article.date)}</span>
+                  <Link key={article.id} to={`/news/${article.id}`}>
+                    <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden flex flex-col hover:border-[#4a4a4a] hover:-translate-y-1 transition-all duration-300">
+                      <img 
+                        src={article.imageUrl} 
+                        alt={article.title} 
+                        className="w-full h-48 object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = 'https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=800&auto=format&fit=crop';
+                        }}
+                      />
+                      <div className="p-6 flex flex-col flex-grow">
+                        <div className="flex items-center gap-4 mb-2">
+                          <span className="text-sm font-semibold text-blue-400">太空新闻</span>
+                          <span className="text-sm text-gray-400">{formatDate(article.date)}</span>
+                        </div>
+                        <h3 className="text-xl font-bold mb-3 flex-grow hover:text-blue-400 transition-colors">
+                          {article.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm mb-4 line-clamp-3">{article.summary}</p>
+                        <span className="font-semibold text-blue-400 hover:text-blue-300 transition-colors">
+                          阅读全文 →
+                        </span>
                       </div>
-                      <h3 className="text-xl font-bold mb-3 flex-grow hover:text-blue-400 transition-colors">
-                        <a href={article.url} target="_blank" rel="noopener noreferrer">{article.title}</a>
-                      </h3>
-                      <p className="text-gray-400 text-sm mb-4 line-clamp-3">{article.summary}</p>
-                      <a 
-                        href={article.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="font-semibold text-blue-400 hover:text-blue-300 transition-colors"
-                      >
-                        阅读全文 →
-                      </a>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
