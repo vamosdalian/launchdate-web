@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
-import { launches } from '../data/sampleData';
 import { Badge } from '@/components/ui/badge';
+import { useCallback, useMemo } from 'react';
+import { useApi } from '../hooks/useApi';
+import { fetchRocketLaunches } from '../services/launchesService';
 
 const Launches = () => {
+  const fetchLaunchesCallback = useCallback(() => fetchRocketLaunches(), []);
+  const { data: launches, loading, error } = useApi(fetchLaunchesCallback);
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -32,9 +36,39 @@ const Launches = () => {
   };
 
   // Sort launches by date (newest first)
-  const sortedLaunches = [...launches].sort((a, b) => 
-    new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  const sortedLaunches = useMemo(() => {
+    if (!launches) return [];
+    return [...launches].sort((a, b) => 
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+  }, [launches]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading launches...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-400 text-lg mb-4">Error loading launches: {error.message}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

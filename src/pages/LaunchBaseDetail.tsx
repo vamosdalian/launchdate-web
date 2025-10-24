@@ -1,18 +1,43 @@
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { launchBases, launches } from '@/data/sampleData';
+import { useCallback, useMemo } from 'react';
+import { useApi } from '../hooks/useApi';
+import { fetchLaunchBase } from '../services/launchBasesService';
+import { fetchRocketLaunches } from '../services/launchesService';
 
 const LaunchBaseDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const base = launchBases.find((b) => b.id === id);
+  
+  const fetchLaunchBaseCallback = useCallback(() => fetchLaunchBase(id!), [id]);
+  const { data: base, loading: baseLoading, error: baseError } = useApi(fetchLaunchBaseCallback);
+  
+  const fetchLaunchesCallback = useCallback(() => fetchRocketLaunches(), []);
+  const { data: launches } = useApi(fetchLaunchesCallback);
 
-  if (!base) {
+  // Get launches from this base
+  const baseLaunches = useMemo(() => {
+    if (!launches || !base) return [];
+    return launches.filter(l => l.launchBase === base.name).slice(0, 6);
+  }, [launches, base]);
+
+  if (baseLoading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading launch base details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (baseError || !base) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-8 max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4">Launch Site Not Found</h1>
-          <p className="text-gray-400 mb-6">The requested launch site does not exist.</p>
+          <p className="text-gray-400 mb-6">{baseError?.message || 'The requested launch site does not exist.'}</p>
           <Button asChild className="bg-blue-600 hover:bg-blue-700">
             <Link to="/bases">Back to Launch Sites</Link>
           </Button>
@@ -20,9 +45,6 @@ const LaunchBaseDetail = () => {
       </div>
     );
   }
-
-  // Get launches from this base
-  const baseLaunches = launches.filter(l => l.launchBase === base.name).slice(0, 6);
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">

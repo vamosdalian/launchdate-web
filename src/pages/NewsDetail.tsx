@@ -1,20 +1,36 @@
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { news } from '@/data/sampleData';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { useCallback } from 'react';
+import { useApi } from '../hooks/useApi';
+import { fetchNewsArticle } from '../services/newsService';
+import type { News } from '../types';
 
 const NewsDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const article = news.find((n) => n.id === id);
+  
+  const fetchNewsCallback = useCallback(() => fetchNewsArticle(id!), [id]);
+  const { data: article, loading, error } = useApi(fetchNewsCallback);
 
-  if (!article) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading article...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !article) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-8 max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4">Article Not Found</h1>
-          <p className="text-gray-400 mb-6">The requested article does not exist.</p>
+          <p className="text-gray-400 mb-6">{error?.message || 'The requested article does not exist.'}</p>
           <Button asChild className="bg-blue-600 hover:bg-blue-700">
             <Link to="/news">Back to News</Link>
           </Button>
@@ -32,8 +48,8 @@ const NewsDetail = () => {
     });
   };
 
-  // Get related articles (exclude current one)
-  const relatedArticles = news.filter(n => n.id !== id).slice(0, 3);
+  // Get related articles (exclude current one) - will be loaded via API in future
+  const relatedArticles: News[] = [];
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">

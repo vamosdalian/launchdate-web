@@ -1,20 +1,34 @@
 import { useParams, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { rockets } from '@/data/sampleData';
+import { useApi } from '../hooks/useApi';
+import { fetchRocket } from '../services/rocketsService';
 
 const RocketDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const rocket = rockets.find((r) => r.id === id);
   const [activeTab, setActiveTab] = useState('overview');
+  
+  const fetchRocketCallback = useCallback(() => fetchRocket(id!), [id]);
+  const { data: rocket, loading, error } = useApi(fetchRocketCallback);
 
-  if (!rocket) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading rocket details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !rocket) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-8 max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4 text-white">Rocket Not Found</h1>
-          <p className="text-gray-400 mb-6">The requested rocket does not exist.</p>
+          <p className="text-gray-400 mb-6">{error?.message || 'The requested rocket does not exist.'}</p>
           <Button asChild className="bg-blue-600 hover:bg-blue-700">
             <Link to="/rockets">Back to Rockets</Link>
           </Button>
