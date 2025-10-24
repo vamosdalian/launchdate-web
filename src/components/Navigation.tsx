@@ -13,7 +13,8 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-20 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
-            🚀 LaunchDate
+            <img src="/rocket.png" alt="Rocket" className="w-8 h-8" />
+            LaunchDate
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link 
