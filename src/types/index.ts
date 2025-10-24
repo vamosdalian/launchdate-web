@@ -24,6 +24,7 @@ export interface News {
   id: string;
   title: string;
   summary: string;
+  content?: string; // Markdown content for the article
   date: string;
   url: string;
   imageUrl: string;
