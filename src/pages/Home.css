@@ -2,6 +2,10 @@
   min-height: calc(100vh - 70px);
 }
 
+.hero-section {
+  margin-top: -5em;
+}
+
 .hero {
   text-align: center;
   padding: 4rem 2rem;
