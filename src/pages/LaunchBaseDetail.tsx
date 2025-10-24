@@ -5,6 +5,12 @@ import { useCallback, useMemo } from 'react';
 import { useApi } from '../hooks/useApi';
 import { fetchLaunchBase } from '../services/launchBasesService';
 import { fetchRocketLaunches } from '../services/launchesService';
+import type { Launch } from '../types';
+
+// Helper to get the best date field from launch data
+const getLaunchDate = (launch: Launch): string => {
+  return launch.t0 || launch.window_open || launch.win_open || launch.date || launch.created_at || '';
+};
 
 const LaunchBaseDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -217,10 +223,10 @@ const LaunchBaseDetail = () => {
                         {getStatusBadge(launch.status)}
                       </div>
                       <div className="space-y-2 text-sm text-gray-400 mb-4">
-                        <p>🚀 {launch.rocket}</p>
-                        <p>📅 {formatDate(launch.date)} UTC</p>
+                        <p>🚀 {launch.vehicle?.name || launch.rocket}</p>
+                        <p>📅 {launch.date_str || formatDate(getLaunchDate(launch))} UTC</p>
                       </div>
-                      <p className="text-gray-300 line-clamp-2">{launch.description}</p>
+                      <p className="text-gray-300 line-clamp-2">{launch.quicktext || launch.launch_description || launch.mission_description || launch.description}</p>
                     </div>
                   </Link>
                 );
