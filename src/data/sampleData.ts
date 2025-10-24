@@ -136,24 +136,181 @@ export const news: News[] = [
     id: '1',
     title: 'SpaceX Completes 200th Successful Landing',
     summary: 'SpaceX has achieved another milestone with its 200th successful booster landing, demonstrating the reliability of reusable rocket technology.',
+    content: `# SpaceX Achieves Historic 200th Successful Landing
+
+SpaceX has reached a remarkable milestone in aerospace engineering, successfully completing its 200th booster landing. This achievement underscores the company's leadership in developing and perfecting reusable rocket technology.
+
+## A Revolutionary Achievement
+
+The Falcon 9 first-stage booster touched down precisely on the autonomous drone ship "Just Read the Instructions" in the Atlantic Ocean, marking this historic 200th recovery. This landing represents years of innovation, testing, and continuous improvement in rocket reusability.
+
+### Key Statistics
+
+- **Total Landings**: 200 successful recoveries
+- **Success Rate**: Over 95% landing success rate
+- **Cost Savings**: Estimated billions of dollars saved through reusability
+- **Turnaround Time**: Some boosters have flown up to 15 times
+
+## Impact on Space Industry
+
+The success of SpaceX's reusable rocket program has fundamentally changed the economics of space access. By recovering and refurbishing boosters, SpaceX has:
+
+1. Reduced launch costs significantly
+2. Increased launch frequency capabilities
+3. Demonstrated the viability of reusable space technology
+4. Inspired competition and innovation across the industry
+
+> "This milestone represents the culmination of years of hard work by our team. Reusability is key to making life multiplanetary." - SpaceX Engineering Team
+
+## Looking Forward
+
+With 200 successful landings achieved, SpaceX continues to push the boundaries of what's possible. The company is now focusing on:
+
+- Further reducing turnaround time between flights
+- Increasing the number of times a single booster can fly
+- Applying reusability lessons to the Starship program
+- Expanding the fleet of recovery vessels
+
+The 200th landing is not just a number—it's a testament to the dedication of thousands of engineers and the vision of making space more accessible for humanity.`,
     date: '2025-10-20T12:00:00Z',
-    url: '#',
+    url: 'https://www.spacex.com',
     imageUrl: 'https://via.placeholder.com/600x400/1e3a8a/ffffff?text=SpaceX+Landing',
   },
   {
     id: '2',
     title: 'New Launch Pad Construction Begins at Cape Canaveral',
     summary: 'NASA and SpaceX have broken ground on a new launch pad specifically designed for Starship missions.',
+    content: `# Construction Begins on New Starship Launch Pad at Cape Canaveral
+
+NASA and SpaceX have officially broken ground on a state-of-the-art launch pad at Cape Canaveral Space Force Station, specifically designed to support Starship missions. This new facility represents a significant investment in the future of deep space exploration.
+
+## Facility Overview
+
+The new Launch Complex will be one of the most advanced launch facilities ever built, featuring:
+
+- **Launch Mount**: Custom-designed for Starship's unique requirements
+- **Propellant Storage**: Massive tanks for methane and liquid oxygen
+- **Integration Tower**: A 146-meter tall structure for vehicle stacking
+- **Flame Trench**: Advanced design to handle Starship's 33 Raptor engines
+
+### Construction Timeline
+
+| Phase | Timeline | Status |
+|-------|----------|--------|
+| Site Preparation | Q4 2025 | In Progress |
+| Foundation Work | Q1 2026 | Scheduled |
+| Tower Construction | Q2-Q3 2026 | Scheduled |
+| Systems Integration | Q4 2026 | Scheduled |
+| Commissioning | Q1 2027 | Planned |
+
+## Strategic Importance
+
+The new launch pad at Cape Canaveral will serve multiple purposes:
+
+1. **NASA Artemis Program**: Support lunar missions
+2. **Commercial Launches**: Enable satellite deployment and space station missions
+3. **Mars Missions**: Facilitate future Mars exploration efforts
+4. **Crew Operations**: Support human spaceflight missions
+
+### Environmental Considerations
+
+The project has undergone extensive environmental review and includes:
+
+- Wildlife protection measures
+- Water quality monitoring systems
+- Noise reduction technologies
+- Sustainable construction practices
+
+## Community Impact
+
+The construction project is expected to:
+
+- Create over 1,500 jobs during construction
+- Generate 300 permanent operational positions
+- Boost local economy by an estimated $500 million annually
+- Enhance Florida's position as a global spaceflight hub
+
+> "This launch pad represents not just infrastructure, but the gateway to humanity's future in space." - NASA Administrator
+
+The new facility is expected to be operational by early 2027, just in time to support an ambitious schedule of lunar and deep space missions.`,
     date: '2025-10-18T14:30:00Z',
-    url: '#',
+    url: 'https://www.nasa.gov',
     imageUrl: 'https://via.placeholder.com/600x400/059669/ffffff?text=Launch+Pad',
   },
   {
     id: '3',
     title: 'Blue Origin Announces New Crew Mission',
     summary: 'Blue Origin has announced a new crew mission for early 2026, marking another step in commercial space tourism.',
+    content: `# Blue Origin Announces New Crew Mission for 2026
+
+Blue Origin has announced plans for an exciting new crew mission scheduled for early 2026, continuing the company's commitment to making space accessible to private citizens and researchers.
+
+## Mission Details
+
+The upcoming NS-28 mission will carry six passengers aboard the New Shepard vehicle to the edge of space, providing them with approximately 10 minutes of weightlessness and breathtaking views of Earth.
+
+### Flight Profile
+
+The mission will follow Blue Origin's proven flight profile:
+
+- **Launch**: Vertical takeoff from West Texas facility
+- **Ascent**: Approximately 3 minutes to apogee
+- **Apogee**: Above 100 km (Kármán line)
+- **Microgravity**: 10+ minutes of weightlessness
+- **Descent**: Parachute landing in the Texas desert
+
+## Crew Selection
+
+Blue Origin is implementing a unique crew selection process for this mission:
+
+- Two seats reserved for private astronauts
+- Two seats for research institutions
+- Two seats for Blue Origin's Club for the Future program participants
+
+### Training Program
+
+Selected crew members will undergo comprehensive training including:
+
+1. Mission simulation exercises
+2. Safety procedures and emergency protocols
+3. Zero-gravity familiarization
+4. Vehicle systems overview
+5. Physical and psychological preparation
+
+## Scientific Objectives
+
+Beyond space tourism, the mission will conduct several scientific experiments:
+
+- **Materials Science**: Testing new materials in microgravity
+- **Biological Research**: Studying cellular behavior in space
+- **Earth Observation**: High-resolution photography for climate research
+- **Technology Demonstration**: Testing new spacecraft systems
+
+### Research Partnerships
+
+Blue Origin is collaborating with:
+
+- Leading universities for educational outreach
+- Research institutions for scientific experiments
+- Technology companies for system validation
+- Space agencies for data sharing
+
+## Vehicle Enhancements
+
+The New Shepard vehicle for this mission features several upgrades:
+
+- Enhanced crew cabin comfort systems
+- Improved viewing windows
+- Advanced communication systems
+- Upgraded safety features
+
+> "Every mission brings us closer to a future where millions of people are living and working in space." - Blue Origin Team
+
+## Booking and Availability
+
+Interested participants can learn more about future missions through Blue Origin's official website. The company plans to increase flight frequency throughout 2026 and beyond.`,
     date: '2025-10-15T10:00:00Z',
-    url: '#',
+    url: 'https://www.blueorigin.com',
     imageUrl: 'https://via.placeholder.com/600x400/dc2626/ffffff?text=Blue+Origin',
   },
 ];

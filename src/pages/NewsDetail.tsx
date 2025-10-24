@@ -2,6 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { news } from '@/data/sampleData';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const NewsDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -68,38 +70,81 @@ const NewsDetail = () => {
               <Link to="/news">← Back to News</Link>
             </Button>
 
-            <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-8 md:p-12">
-              {/* Summary */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4">Summary</h2>
-                <p className="text-xl text-gray-300 leading-relaxed">{article.summary}</p>
-              </div>
+            {/* Article content rendered directly without card wrapper */}
+            <article className="prose prose-lg prose-invert max-w-none">
+              {article.content ? (
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    // Customize heading styles
+                    h1: (props) => <h1 className="text-4xl font-extrabold mb-6 mt-8 text-white" {...props} />,
+                    h2: (props) => <h2 className="text-3xl font-bold mb-5 mt-7 text-white" {...props} />,
+                    h3: (props) => <h3 className="text-2xl font-semibold mb-4 mt-6 text-white" {...props} />,
+                    // Customize paragraph styles
+                    p: (props) => <p className="text-gray-300 mb-4 leading-relaxed text-lg" {...props} />,
+                    // Customize list styles
+                    ul: (props) => <ul className="text-gray-300 mb-4 ml-6 list-disc space-y-2" {...props} />,
+                    ol: (props) => <ol className="text-gray-300 mb-4 ml-6 list-decimal space-y-2" {...props} />,
+                    li: (props) => <li className="text-gray-300 leading-relaxed" {...props} />,
+                    // Customize blockquote styles
+                    blockquote: (props) => (
+                      <blockquote className="border-l-4 border-blue-600 pl-6 py-2 my-6 italic text-gray-400 bg-[#1a1a1a] rounded-r-lg" {...props} />
+                    ),
+                    // Customize table styles
+                    table: (props) => (
+                      <div className="overflow-x-auto my-6">
+                        <table className="min-w-full border border-[#2a2a2a] rounded-lg" {...props} />
+                      </div>
+                    ),
+                    thead: (props) => <thead className="bg-[#1a1a1a]" {...props} />,
+                    th: (props) => <th className="border border-[#2a2a2a] px-4 py-3 text-left font-semibold text-white" {...props} />,
+                    td: (props) => <td className="border border-[#2a2a2a] px-4 py-3 text-gray-300" {...props} />,
+                    // Customize code styles
+                    code: (props) => {
+                      const {children, className} = props;
+                      const isInline = !className || !className.includes('language-');
+                      return isInline ? (
+                        <code className="bg-[#1a1a1a] border border-[#2a2a2a] px-2 py-1 rounded text-sm text-blue-400">{children}</code>
+                      ) : (
+                        <code className="block bg-[#1a1a1a] border border-[#2a2a2a] p-4 rounded-lg text-sm overflow-x-auto">{children}</code>
+                      );
+                    },
+                    // Customize link styles - only open external links in new tab
+                    a: ({href, ...props}) => {
+                      const isExternal = href && (href.startsWith('http://') || href.startsWith('https://'));
+                      return (
+                        <a 
+                          href={href}
+                          className="text-blue-400 hover:text-blue-300 underline transition-colors" 
+                          {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                          {...props} 
+                        />
+                      );
+                    },
+                  }}
+                >
+                  {article.content}
+                </ReactMarkdown>
+              ) : (
+                <div className="text-gray-300">
+                  <p className="text-xl leading-relaxed">{article.summary}</p>
+                </div>
+              )}
+            </article>
 
-              {/* Full Content Placeholder */}
-              <div className="prose prose-invert max-w-none">
-                <p className="text-gray-300 mb-4">
-                  This is a detailed article about the latest developments in space exploration. 
-                  The story covers significant breakthroughs and provides insights into the future of aerospace technology.
-                </p>
-                <p className="text-gray-300 mb-4">
-                  {article.summary} The implications of these developments are far-reaching and will 
-                  shape the trajectory of space exploration for years to come.
-                </p>
-                <p className="text-gray-300 mb-4">
-                  Industry experts suggest that this marks a turning point in our approach to space missions,
-                  combining innovative technology with sustainable practices.
-                </p>
+            {/* External Link at bottom */}
+            {article.url && article.url !== '#' && (
+              <div className="mt-12 pt-8 border-t border-[#2a2a2a]">
+                <div className="flex items-center justify-between">
+                  <p className="text-gray-400">Read the original article from the source:</p>
+                  <Button asChild className="bg-blue-600 hover:bg-blue-700">
+                    <a href={article.url} target="_blank" rel="noopener noreferrer">
+                      Visit Source →
+                    </a>
+                  </Button>
+                </div>
               </div>
-
-              {/* External Link */}
-              <div className="mt-8 pt-8 border-t border-[#2a2a2a]">
-                <Button asChild className="bg-blue-600 hover:bg-blue-700">
-                  <a href={article.url} target="_blank" rel="noopener noreferrer">
-                    Read Original Article →
-                  </a>
-                </Button>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
