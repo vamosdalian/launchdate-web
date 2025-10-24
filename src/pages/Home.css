@@ -2,6 +2,12 @@
   min-height: calc(100vh - 70px);
 }
 
+.hero-section {
+  /* Negative margin to counteract the global 5rem padding-top on .main-content,
+     allowing the hero section to extend to the viewport top for full-screen effect */
+  margin-top: -5em;
+}
+
 .hero {
   text-align: center;
   padding: 4rem 2rem;

@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { launches, news, rockets, companies } from '@/data/sampleData';
 import { useEffect, useState } from 'react';
+import './Home.css';
 
 const Home = () => {
   // Get the next upcoming launch
@@ -80,7 +81,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section with Countdown */}
-      <section className="relative h-screen flex items-end justify-center text-center overflow-hidden">
+      <section className="hero-section relative h-screen flex items-end justify-center text-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
