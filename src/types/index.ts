@@ -34,11 +34,13 @@ export interface Launch {
   modified?: string;
   
   // Launch window fields
+  // Note: API supports both window_* and win_* variants for compatibility
+  // Prefer window_* fields, but support win_* for backward compatibility
   window_open?: string;
-  win_open?: string; // API might use this variant
+  win_open?: string;
   t0?: string;
   window_close?: string;
-  win_close?: string; // API might use this variant
+  win_close?: string;
   date_str?: string;
   
   // Provider information (nested)

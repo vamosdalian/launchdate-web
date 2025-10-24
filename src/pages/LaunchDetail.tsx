@@ -32,6 +32,15 @@ const LaunchDetail = () => {
     return launchData.t0 || launchData.window_open || launchData.win_open || launchData.date || '';
   };
 
+  // Format time for launch window display
+  const formatWindowTime = (dateString: string) => {
+    return new Date(dateString).toLocaleTimeString('en-US', {
+      timeZone: 'UTC',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   // Update countdown every second
   useEffect(() => {
     if (!launch || launch.status !== 'scheduled') return;
@@ -275,10 +284,10 @@ const LaunchDetail = () => {
                       <li><strong>Status:</strong> {launch.status === 'successful' ? 'Success' : launch.status === 'failed' ? 'Failed' : launch.status === 'cancelled' ? 'Cancelled' : 'Scheduled'}</li>
                       <li><strong>Launch Time:</strong> {launch.date_str || formatDate(getLaunchDate(launch))}</li>
                       {launch.window_open && launch.window_close && (
-                        <li><strong>Launch Window:</strong> {new Date(launch.window_open).toLocaleTimeString('en-US', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' })} - {new Date(launch.window_close).toLocaleTimeString('en-US', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' })} UTC</li>
+                        <li><strong>Launch Window:</strong> {formatWindowTime(launch.window_open)} - {formatWindowTime(launch.window_close)} UTC</li>
                       )}
                       {launch.win_open && launch.win_close && !launch.window_open && (
-                        <li><strong>Launch Window:</strong> {new Date(launch.win_open).toLocaleTimeString('en-US', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' })} - {new Date(launch.win_close).toLocaleTimeString('en-US', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' })} UTC</li>
+                        <li><strong>Launch Window:</strong> {formatWindowTime(launch.win_open)} - {formatWindowTime(launch.win_close)} UTC</li>
                       )}
                       {launch.cospar_id && (
                         <li><strong>COSPAR ID:</strong> {launch.cospar_id}</li>
@@ -389,7 +398,7 @@ const LaunchDetail = () => {
                           <ul className="grid sm:grid-cols-2 gap-4 text-gray-300">
                             <li><strong>Country:</strong> {launchBase.country}</li>
                             {launchBase.latitude !== 0 && launchBase.longitude !== 0 && (
-                              <li><strong>Coordinates:</strong> {launchBase.latitude.toFixed(4)}°N, {Math.abs(launchBase.longitude).toFixed(4)}°W</li>
+                              <li><strong>Coordinates:</strong> {launchBase.latitude.toFixed(4)}°{launchBase.latitude >= 0 ? 'N' : 'S'}, {Math.abs(launchBase.longitude).toFixed(4)}°{launchBase.longitude >= 0 ? 'E' : 'W'}</li>
                             )}
                           </ul>
                         </>
@@ -409,7 +418,7 @@ const LaunchDetail = () => {
                         launch.name.includes('Moon') || launch.name.includes('Artemis') ? 'Trans-Lunar Injection' :
                         'Low Earth Orbit (LEO)'
                       }</li>
-                      {(rocket?.name.includes('Falcon') || launch.vehicle?.name.includes('Falcon')) && (
+                      {(rocket?.name.includes('Falcon') || launch.vehicle?.name?.includes('Falcon')) && (
                         <>
                           <li><strong>First Stage Recovery:</strong> Yes</li>
                           <li><strong>Fairing Recovery:</strong> Yes</li>
