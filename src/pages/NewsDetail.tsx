@@ -109,21 +109,25 @@ const NewsDetail = () => {
                         <code className="block bg-[#1a1a1a] border border-[#2a2a2a] p-4 rounded-lg text-sm overflow-x-auto">{children}</code>
                       );
                     },
-                    // Customize link styles
-                    a: (props) => (
-                      <a className="text-blue-400 hover:text-blue-300 underline transition-colors" target="_blank" rel="noopener noreferrer" {...props} />
-                    ),
+                    // Customize link styles - only open external links in new tab
+                    a: ({href, ...props}) => {
+                      const isExternal = href && (href.startsWith('http://') || href.startsWith('https://'));
+                      return (
+                        <a 
+                          href={href}
+                          className="text-blue-400 hover:text-blue-300 underline transition-colors" 
+                          {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                          {...props} 
+                        />
+                      );
+                    },
                   }}
                 >
                   {article.content}
                 </ReactMarkdown>
               ) : (
-                <div className="text-gray-300 space-y-4">
+                <div className="text-gray-300">
                   <p className="text-xl leading-relaxed">{article.summary}</p>
-                  <p className="leading-relaxed">
-                    This is a detailed article about the latest developments in space exploration. 
-                    The story covers significant breakthroughs and provides insights into the future of aerospace technology.
-                  </p>
                 </div>
               )}
             </article>
