@@ -3,6 +3,8 @@
 }
 
 .hero-section {
+  /* Negative margin to counteract the global 5rem padding-top on .main-content,
+     allowing the hero section to extend to the viewport top for full-screen effect */
   margin-top: -5em;
 }
 
