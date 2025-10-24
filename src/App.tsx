@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -18,6 +19,14 @@ function AppContent() {
   const location = useLocation();
   // Don't show global footer on LaunchDetail pages (they have their own)
   const showFooter = !location.pathname.match(/^\/launches\/\d+$/);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    // Only scroll if not already at the top to avoid unnecessary operations
+    if (window.scrollY > 0) {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
 
   return (
     <div className="app">
