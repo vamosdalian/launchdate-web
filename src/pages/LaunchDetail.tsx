@@ -1,12 +1,23 @@
 import { useParams, Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { launches, rockets, launchBases } from '@/data/sampleData';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import { useApi } from '../hooks/useApi';
+import { fetchRocketLaunch } from '../services/launchesService';
+import { fetchRockets } from '../services/rocketsService';
+import { fetchLaunchBases } from '../services/launchBasesService';
 
 const LaunchDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const launch = launches.find((l) => l.id === id);
+  
+  const fetchLaunchCallback = useCallback(() => fetchRocketLaunch(id!), [id]);
+  const { data: launch, loading: launchLoading, error: launchError } = useApi(fetchLaunchCallback);
+  
+  const fetchRocketsCallback = useCallback(() => fetchRockets(), []);
+  const { data: rockets } = useApi(fetchRocketsCallback);
+  
+  const fetchLaunchBasesCallback = useCallback(() => fetchLaunchBases(), []);
+  const { data: launchBases } = useApi(fetchLaunchBasesCallback);
 
   // Countdown state
   const [countdown, setCountdown] = useState({
@@ -43,12 +54,23 @@ const LaunchDetail = () => {
     return () => clearInterval(interval);
   }, [launch]);
 
-  if (!launch) {
+  if (launchLoading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading launch details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (launchError || !launch) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-8 max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4">Launch Not Found</h1>
-          <p className="text-gray-400 mb-6">The requested launch does not exist.</p>
+          <p className="text-gray-400 mb-6">{launchError?.message || 'The requested launch does not exist.'}</p>
           <Button asChild className="bg-blue-600 hover:bg-blue-700">
             <Link to="/launches">Back to Launches</Link>
           </Button>
@@ -57,8 +79,8 @@ const LaunchDetail = () => {
     );
   }
 
-  const rocket = rockets.find((r) => r.name === launch.rocket);
-  const launchBase = launchBases.find((b) => b.name === launch.launchBase);
+  const rocket = rockets?.find((r) => r.name === launch.rocket);
+  const launchBase = launchBases?.find((b) => b.name === launch.launchBase);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);

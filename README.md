@@ -36,6 +36,10 @@ cd launchdate-web
 
 # Install dependencies
 npm install
+
+# Copy environment variables
+cp .env.example .env
+# Edit .env to set VITE_API_BASE_URL to your backend API URL
 ```
 
 ### Development Server
@@ -129,6 +133,26 @@ The workflow will:
 2. Tag it with the version number
 3. Push to GitHub Container Registry (ghcr.io)
 
+## 🔌 Backend Integration
+
+This frontend application integrates with the [LaunchDate Backend API](https://github.com/vamosdalian/launchdate-backend) to fetch data for:
+
+- Rockets
+- Space Companies
+- Launch Bases
+- Rocket Launches
+- Space News
+
+### Configuration
+
+Set the backend API URL in your `.env` file:
+
+```env
+VITE_API_BASE_URL=http://localhost:8080
+```
+
+For production deployments, set this to your backend API URL.
+
 ## 📁 Project Structure
 
 ```
@@ -136,10 +160,11 @@ launchdate-web/
 ├── src/
 │   ├── components/      # Reusable React components
 │   ├── pages/          # Page components
-│   ├── hooks/          # Custom React hooks
-│   ├── lib/            # Utility functions
+│   ├── hooks/          # Custom React hooks (including useApi)
+│   ├── services/       # API service layer for data fetching
+│   ├── lib/            # Utility functions and API configuration
 │   ├── types/          # TypeScript type definitions
-│   ├── data/           # Static data
+│   ├── data/           # Static data (fallback/examples)
 │   ├── assets/         # Images and static files
 │   ├── App.tsx         # Main application component
 │   └── main.tsx        # Application entry point
@@ -148,6 +173,7 @@ launchdate-web/
 │   └── workflows/      # GitHub Actions workflows
 ├── Dockerfile          # Docker build configuration
 ├── nginx.conf          # Nginx server configuration
+├── .env.example        # Environment variables example
 └── package.json        # Project dependencies
 ```
 

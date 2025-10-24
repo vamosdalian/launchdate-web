@@ -1,21 +1,40 @@
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { launches, news, rockets, companies } from '@/data/sampleData';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useApi } from '../hooks/useApi';
+import { fetchRocketLaunches } from '../services/launchesService';
+import { fetchNews } from '../services/newsService';
+import { fetchRockets } from '../services/rocketsService';
+import { fetchCompanies } from '../services/companiesService';
 import './Home.css';
 
 const Home = () => {
-  // Get the next upcoming launch
-  const now = new Date();
-  const upcomingLaunches = launches
-    .filter((launch) => {
-      const launchDate = new Date(launch.date);
-      return launch.status === 'scheduled' && launchDate >= now;
-    })
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  const fetchLaunchesCallback = useCallback(() => fetchRocketLaunches(), []);
+  const { data: launches } = useApi(fetchLaunchesCallback);
   
-  const nextLaunch = upcomingLaunches[0];
+  const fetchNewsCallback = useCallback(() => fetchNews(), []);
+  const { data: news } = useApi(fetchNewsCallback);
+  
+  const fetchRocketsCallback = useCallback(() => fetchRockets(), []);
+  const { data: rockets } = useApi(fetchRocketsCallback);
+  
+  const fetchCompaniesCallback = useCallback(() => fetchCompanies(), []);
+  const { data: companies } = useApi(fetchCompaniesCallback);
+
+  // Get the next upcoming launch
+  const nextLaunch = useMemo(() => {
+    if (!launches) return null;
+    const now = new Date();
+    const upcomingLaunches = launches
+      .filter((launch) => {
+        const launchDate = new Date(launch.date);
+        return launch.status === 'scheduled' && launchDate >= now;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    
+    return upcomingLaunches[0];
+  }, [launches]);
 
   // Countdown state
   const [countdown, setCountdown] = useState({
@@ -53,19 +72,43 @@ const Home = () => {
   }, [nextLaunch]);
 
   // Get recent launch results (successful or failed)
-  const recentResults = launches
-    .filter((launch) => launch.status === 'successful' || launch.status === 'failed')
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 6);
+  const recentResults = useMemo(() => {
+    if (!launches) return [];
+    return launches
+      .filter((launch) => launch.status === 'successful' || launch.status === 'failed')
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 6);
+  }, [launches]);
 
   // Get latest news
-  const latestNews = news.slice(0, 3);
+  const latestNews = useMemo(() => {
+    if (!news) return [];
+    return news.slice(0, 3);
+  }, [news]);
 
   // Get popular rockets (active ones)
-  const popularRockets = rockets.filter(rocket => rocket.active).slice(0, 4);
+  const popularRockets = useMemo(() => {
+    if (!rockets) return [];
+    return rockets.filter(rocket => rocket.active).slice(0, 4);
+  }, [rockets]);
 
   // Get popular companies
-  const popularCompanies = companies.slice(0, 5);
+  const popularCompanies = useMemo(() => {
+    if (!companies) return [];
+    return companies.slice(0, 5);
+  }, [companies]);
+  
+  // Get upcoming launches for the section
+  const upcomingLaunches = useMemo(() => {
+    if (!launches) return [];
+    const now = new Date();
+    return launches
+      .filter((launch) => {
+        const launchDate = new Date(launch.date);
+        return launch.status === 'scheduled' && launchDate >= now;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }, [launches]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);

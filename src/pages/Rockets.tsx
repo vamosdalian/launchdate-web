@@ -1,19 +1,53 @@
 import { Link } from 'react-router-dom';
-import { rockets } from '../data/sampleData';
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import { useApi } from '../hooks/useApi';
+import { fetchRockets } from '../services/rocketsService';
 
 const Rockets = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<'all' | 'active' | 'retired'>('all');
 
-  const filteredRockets = rockets.filter((rocket) => {
-    const matchesSearch = rocket.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = 
-      activeFilter === 'all' || 
-      (activeFilter === 'active' && rocket.active) || 
-      (activeFilter === 'retired' && !rocket.active);
-    return matchesSearch && matchesFilter;
-  });
+  const fetchRocketsCallback = useCallback(() => fetchRockets(), []);
+  const { data: rockets, loading, error } = useApi(fetchRocketsCallback);
+
+  const filteredRockets = useMemo(() => {
+    if (!rockets) return [];
+    return rockets.filter((rocket) => {
+      const matchesSearch = rocket.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesFilter = 
+        activeFilter === 'all' || 
+        (activeFilter === 'active' && rocket.active) || 
+        (activeFilter === 'retired' && !rocket.active);
+      return matchesSearch && matchesFilter;
+    });
+  }, [rockets, searchTerm, activeFilter]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading rockets...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-400 text-lg mb-4">Error loading rockets: {error.message}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">

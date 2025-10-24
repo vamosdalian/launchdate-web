@@ -1,18 +1,54 @@
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { companies, rockets, launches } from '@/data/sampleData';
+import { useCallback, useMemo } from 'react';
+import { useApi } from '../hooks/useApi';
+import { fetchCompany } from '../services/companiesService';
+import { fetchRockets } from '../services/rocketsService';
+import { fetchRocketLaunches } from '../services/launchesService';
 
 const CompanyDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const company = companies.find((c) => c.id === id);
+  
+  const fetchCompanyCallback = useCallback(() => fetchCompany(id!), [id]);
+  const { data: company, loading: companyLoading, error: companyError } = useApi(fetchCompanyCallback);
+  
+  const fetchRocketsCallback = useCallback(() => fetchRockets(), []);
+  const { data: rockets } = useApi(fetchRocketsCallback);
+  
+  const fetchLaunchesCallback = useCallback(() => fetchRocketLaunches(), []);
+  const { data: launches } = useApi(fetchLaunchesCallback);
 
-  if (!company) {
+  // Get company's rockets and launches
+  const companyRockets = useMemo(() => {
+    if (!rockets || !company) return [];
+    return rockets.filter(r => r.company === company.name);
+  }, [rockets, company]);
+  
+  const companyLaunches = useMemo(() => {
+    if (!launches || !companyRockets.length) return [];
+    return launches.filter(l => 
+      companyRockets.some(r => r.name === l.rocket)
+    ).slice(0, 6);
+  }, [launches, companyRockets]);
+
+  if (companyLoading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading company details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (companyError || !company) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-8 max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4">Company Not Found</h1>
-          <p className="text-gray-400 mb-6">The requested company does not exist.</p>
+          <p className="text-gray-400 mb-6">{companyError?.message || 'The requested company does not exist.'}</p>
           <Button asChild className="bg-blue-600 hover:bg-blue-700">
             <Link to="/companies">Back to Companies</Link>
           </Button>
@@ -20,12 +56,6 @@ const CompanyDetail = () => {
       </div>
     );
   }
-
-  // Get company's rockets and launches
-  const companyRockets = rockets.filter(r => r.company === company.name);
-  const companyLaunches = launches.filter(l => 
-    companyRockets.some(r => r.name === l.rocket)
-  ).slice(0, 6);
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">

@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
-import { news } from '../data/sampleData';
+import { useCallback, useMemo } from 'react';
+import { useApi } from '../hooks/useApi';
+import { fetchNews } from '../services/newsService';
 
 const News = () => {
+  const fetchNewsCallback = useCallback(() => fetchNews(), []);
+  const { data: news, loading, error } = useApi(fetchNewsCallback);
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -12,8 +16,42 @@ const News = () => {
   };
 
   // Get featured article (first one)
-  const featuredArticle = news[0];
-  const regularNews = news.slice(1);
+  const { featuredArticle, regularNews } = useMemo(() => {
+    if (!news || news.length === 0) {
+      return { featuredArticle: null, regularNews: [] };
+    }
+    return {
+      featuredArticle: news[0],
+      regularNews: news.slice(1)
+    };
+  }, [news]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading news...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-400 text-lg mb-4">Error loading news: {error.message}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

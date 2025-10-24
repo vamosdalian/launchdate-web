@@ -2,7 +2,7 @@ import type { Rocket, Launch, News, LaunchBase, Company } from '../types';
 
 export const rockets: Rocket[] = [
   {
-    id: '1',
+    id: 1,
     name: 'Falcon 9',
     description: 'A reusable, two-stage rocket designed and manufactured by SpaceX for the reliable and safe transport of people and payloads into Earth orbit and beyond.',
     height: 70,
@@ -13,7 +13,7 @@ export const rockets: Rocket[] = [
     active: true,
   },
   {
-    id: '2',
+    id: 2,
     name: 'Falcon Heavy',
     description: 'The most powerful operational rocket in the world by a factor of two, capable of carrying large payloads to orbit and beyond.',
     height: 70,
@@ -24,7 +24,7 @@ export const rockets: Rocket[] = [
     active: true,
   },
   {
-    id: '3',
+    id: 3,
     name: 'Starship',
     description: 'A fully reusable transportation system designed to carry both crew and cargo to Earth orbit, the Moon, Mars, and beyond.',
     height: 120,
@@ -35,7 +35,7 @@ export const rockets: Rocket[] = [
     active: true,
   },
   {
-    id: '4',
+    id: 4,
     name: 'New Shepard',
     description: 'A fully reusable sub-orbital launch vehicle developed by Blue Origin for space tourism.',
     height: 18,
@@ -49,7 +49,7 @@ export const rockets: Rocket[] = [
 
 export const launches: Launch[] = [
   {
-    id: '1',
+    id: 1,
     name: 'Starlink Mission',
     date: '2025-10-23T10:30:00Z',
     rocket: 'Falcon 9',
@@ -58,7 +58,7 @@ export const launches: Launch[] = [
     description: 'Deployment of 60 Starlink satellites to low Earth orbit.',
   },
   {
-    id: '2',
+    id: 2,
     name: 'GPS III SV06',
     date: '2025-10-25T09:15:00Z',
     rocket: 'Falcon 9',
@@ -67,7 +67,7 @@ export const launches: Launch[] = [
     description: 'Launch of GPS III satellite for the US Space Force.',
   },
   {
-    id: '3',
+    id: 3,
     name: 'OneWeb Mission',
     date: '2025-10-27T14:20:00Z',
     rocket: 'Falcon 9',
@@ -76,7 +76,7 @@ export const launches: Launch[] = [
     description: 'Deployment of 40 OneWeb internet satellites.',
   },
   {
-    id: '4',
+    id: 4,
     name: 'Dragon Cargo Mission',
     date: '2025-10-28T22:00:00Z',
     rocket: 'Falcon 9',
@@ -85,7 +85,7 @@ export const launches: Launch[] = [
     description: 'ISS resupply mission carrying scientific experiments and crew supplies.',
   },
   {
-    id: '5',
+    id: 5,
     name: 'NROL-87',
     date: '2025-11-05T22:45:00Z',
     rocket: 'Falcon Heavy',
@@ -94,7 +94,7 @@ export const launches: Launch[] = [
     description: 'National Reconnaissance Office payload launch.',
   },
   {
-    id: '6',
+    id: 6,
     name: 'Crew-8 Mission',
     date: '2025-10-20T15:30:00Z',
     rocket: 'Falcon 9',
@@ -103,7 +103,7 @@ export const launches: Launch[] = [
     description: 'NASA astronauts and international partners launched to the ISS.',
   },
   {
-    id: '7',
+    id: 7,
     name: 'SES-24 Communications Satellite',
     date: '2025-10-18T03:45:00Z',
     rocket: 'Falcon 9',
@@ -112,7 +112,7 @@ export const launches: Launch[] = [
     description: 'Commercial communications satellite deployment to geostationary orbit.',
   },
   {
-    id: '8',
+    id: 8,
     name: 'Starship IFT-5',
     date: '2025-10-15T12:00:00Z',
     rocket: 'Starship',
@@ -121,7 +121,7 @@ export const launches: Launch[] = [
     description: 'Fifth integrated flight test of Starship with booster catch attempt.',
   },
   {
-    id: '9',
+    id: 9,
     name: 'Artemis III',
     date: '2025-12-20T14:00:00Z',
     rocket: 'Starship',
@@ -133,7 +133,7 @@ export const launches: Launch[] = [
 
 export const news: News[] = [
   {
-    id: '1',
+    id: 1,
     title: 'SpaceX Completes 200th Successful Landing',
     summary: 'SpaceX has achieved another milestone with its 200th successful booster landing, demonstrating the reliability of reusable rocket technology.',
     content: `# SpaceX Achieves Historic 200th Successful Landing
@@ -177,7 +177,7 @@ The 200th landing is not just a number—it's a testament to the dedication of t
     imageUrl: 'https://via.placeholder.com/600x400/1e3a8a/ffffff?text=SpaceX+Landing',
   },
   {
-    id: '2',
+    id: 2,
     title: 'New Launch Pad Construction Begins at Cape Canaveral',
     summary: 'NASA and SpaceX have broken ground on a new launch pad specifically designed for Starship missions.',
     content: `# Construction Begins on New Starship Launch Pad at Cape Canaveral
@@ -238,7 +238,7 @@ The new facility is expected to be operational by early 2027, just in time to su
     imageUrl: 'https://via.placeholder.com/600x400/059669/ffffff?text=Launch+Pad',
   },
   {
-    id: '3',
+    id: 3,
     title: 'Blue Origin Announces New Crew Mission',
     summary: 'Blue Origin has announced a new crew mission for early 2026, marking another step in commercial space tourism.',
     content: `# Blue Origin Announces New Crew Mission for 2026
@@ -317,7 +317,7 @@ Interested participants can learn more about future missions through Blue Origin
 
 export const launchBases: LaunchBase[] = [
   {
-    id: '1',
+    id: 1,
     name: 'Kennedy Space Center',
     location: 'Merritt Island, Florida',
     country: 'United States',
@@ -327,7 +327,7 @@ export const launchBases: LaunchBase[] = [
     longitude: -80.6490,
   },
   {
-    id: '2',
+    id: 2,
     name: 'Cape Canaveral Space Force Station',
     location: 'Cape Canaveral, Florida',
     country: 'United States',
@@ -337,7 +337,7 @@ export const launchBases: LaunchBase[] = [
     longitude: -80.5778,
   },
   {
-    id: '3',
+    id: 3,
     name: 'Boca Chica Launch Site',
     location: 'Boca Chica, Texas',
     country: 'United States',
@@ -347,7 +347,7 @@ export const launchBases: LaunchBase[] = [
     longitude: -97.1572,
   },
   {
-    id: '4',
+    id: 4,
     name: 'Vandenberg Space Force Base',
     location: 'Lompoc, California',
     country: 'United States',
@@ -360,7 +360,7 @@ export const launchBases: LaunchBase[] = [
 
 export const companies: Company[] = [
   {
-    id: '1',
+    id: 1,
     name: 'SpaceX',
     description: 'Space Exploration Technologies Corp. is an American aerospace manufacturer and space transportation company founded with the goal of reducing space transportation costs and enabling the colonization of Mars.',
     founded: 2002,
@@ -371,7 +371,7 @@ export const companies: Company[] = [
     imageUrl: 'https://via.placeholder.com/400x400/1e3a8a/ffffff?text=SpaceX',
   },
   {
-    id: '2',
+    id: 2,
     name: 'Blue Origin',
     description: 'An American private spaceflight company developing technologies to enable human access to space at lower costs and increased reliability.',
     founded: 2000,
@@ -382,7 +382,7 @@ export const companies: Company[] = [
     imageUrl: 'https://via.placeholder.com/400x400/dc2626/ffffff?text=Blue+Origin',
   },
   {
-    id: '3',
+    id: 3,
     name: 'NASA',
     description: 'The National Aeronautics and Space Administration is an independent agency of the U.S. federal government responsible for the civilian space program and aerospace research.',
     founded: 1958,
@@ -393,7 +393,7 @@ export const companies: Company[] = [
     imageUrl: 'https://via.placeholder.com/400x400/059669/ffffff?text=NASA',
   },
   {
-    id: '4',
+    id: 4,
     name: 'Rocket Lab',
     description: 'An American aerospace manufacturer with a wholly-owned New Zealand subsidiary, specializing in small satellite launches.',
     founded: 2006,
