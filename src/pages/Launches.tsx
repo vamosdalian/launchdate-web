@@ -4,6 +4,11 @@ import { useCallback, useMemo } from 'react';
 import { useApi } from '../hooks/useApi';
 import { fetchRocketLaunches } from '../services/launchesService';
 
+// Get the best date field to display
+const getLaunchDate = (launch: { t0?: string; window_open?: string; win_open?: string; date?: string; created_at?: string }) => {
+  return launch.t0 || launch.window_open || launch.win_open || launch.date || launch.created_at || '';
+};
+
 const Launches = () => {
   const fetchLaunchesCallback = useCallback(() => fetchRocketLaunches(), []);
   const { data: launches, loading, error } = useApi(fetchLaunchesCallback);
@@ -38,9 +43,11 @@ const Launches = () => {
   // Sort launches by date (newest first)
   const sortedLaunches = useMemo(() => {
     if (!launches) return [];
-    return [...launches].sort((a, b) => 
-      new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    return [...launches].sort((a, b) => {
+      const dateA = getLaunchDate(a);
+      const dateB = getLaunchDate(b);
+      return new Date(dateB).getTime() - new Date(dateA).getTime();
+    });
   }, [launches]);
 
   if (loading) {
@@ -102,23 +109,44 @@ const Launches = () => {
                           <h3 className="text-xl font-semibold mb-1">{launch.name}</h3>
                           <div className="flex items-center gap-2 text-sm text-muted-foreground">
                             <span>🗓️</span>
-                            <span>{formatDate(launch.date)}</span>
+                            <span>{launch.date_str || formatDate(getLaunchDate(launch))}</span>
                           </div>
                         </div>
                         {getStatusBadge(launch.status)}
                       </div>
                       
-                      <p className="text-sm sm:text-base text-muted-foreground text-pretty">
-                        {launch.description}
-                      </p>
+                      {launch.quicktext && (
+                        <p className="text-sm sm:text-base text-muted-foreground text-pretty">
+                          {launch.quicktext}
+                        </p>
+                      )}
+                      {!launch.quicktext && (launch.launch_description || launch.mission_description || launch.description) && (
+                        <p className="text-sm sm:text-base text-muted-foreground text-pretty">
+                          {launch.launch_description || launch.mission_description || launch.description}
+                        </p>
+                      )}
                       
                       <div className="flex flex-wrap gap-2">
-                        <Badge variant="secondary" className="rounded-full">
-                          🚀 {launch.rocket}
-                        </Badge>
-                        <Badge variant="secondary" className="rounded-full">
-                          📍 {launch.launchBase}
-                        </Badge>
+                        {(launch.vehicle?.name || launch.rocket) && (
+                          <Badge variant="secondary" className="rounded-full">
+                            🚀 {launch.vehicle?.name || launch.rocket}
+                          </Badge>
+                        )}
+                        {(launch.pad?.name || launch.launchBase) && (
+                          <Badge variant="secondary" className="rounded-full">
+                            📍 {launch.pad?.name || launch.launchBase}
+                          </Badge>
+                        )}
+                        {launch.provider?.name && (
+                          <Badge variant="secondary" className="rounded-full">
+                            🏢 {launch.provider.name}
+                          </Badge>
+                        )}
+                        {launch.tags && launch.tags.slice(0, 3).map((tag) => (
+                          <Badge key={tag.id} variant="outline" className="rounded-full">
+                            {tag.text}
+                          </Badge>
+                        ))}
                       </div>
                     </div>
                   </Link>

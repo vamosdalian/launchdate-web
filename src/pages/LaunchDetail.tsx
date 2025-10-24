@@ -27,12 +27,17 @@ const LaunchDetail = () => {
     seconds: 0,
   });
 
+  // Get the best date field for countdown
+  const getLaunchDate = (launchData: { t0?: string; window_open?: string; win_open?: string; date?: string }) => {
+    return launchData.t0 || launchData.window_open || launchData.win_open || launchData.date || '';
+  };
+
   // Update countdown every second
   useEffect(() => {
     if (!launch || launch.status !== 'scheduled') return;
 
     const updateCountdown = () => {
-      const launchDate = new Date(launch.date).getTime();
+      const launchDate = new Date(getLaunchDate(launch)).getTime();
       const now = new Date().getTime();
       const distance = launchDate - now;
 
@@ -79,8 +84,35 @@ const LaunchDetail = () => {
     );
   }
 
-  const rocket = rockets?.find((r) => r.name === launch.rocket);
-  const launchBase = launchBases?.find((b) => b.name === launch.launchBase);
+  // Try to get rocket from vehicle first, then fallback to legacy lookup
+  const vehicleRocket = launch.vehicle ? {
+    id: launch.vehicle.id,
+    name: launch.vehicle.name,
+    company: launch.provider?.name || 'Unknown',
+    // These fields might not be available in vehicle object
+    description: '',
+    height: 0,
+    diameter: 0,
+    mass: 0,
+    imageUrl: '',
+    active: true,
+  } : null;
+  
+  const rocket = vehicleRocket || rockets?.find((r) => r.name === launch.rocket);
+  
+  // Try to get launch base from pad first, then fallback to legacy lookup
+  const padLaunchBase = launch.pad ? {
+    id: launch.pad.id,
+    name: launch.pad.name,
+    location: launch.pad.location?.name || launch.pad.location?.statename || '',
+    country: launch.pad.location?.country || '',
+    description: '',
+    imageUrl: '',
+    latitude: 0,
+    longitude: 0,
+  } : null;
+  
+  const launchBase = padLaunchBase || launchBases?.find((b) => b.name === launch.launchBase);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -131,9 +163,9 @@ const LaunchDetail = () => {
             {getStatusBadge(launch.status)}
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4">{launch.name}</h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-2">{launch.rocket}</p>
-          <p className="text-lg md:text-xl text-gray-400 mb-2">📍 {launch.launchBase}</p>
-          <p className="text-lg md:text-xl text-gray-400 mb-8">🕒 {formatDate(launch.date)}</p>
+          <p className="text-xl md:text-2xl text-gray-300 mb-2">{launch.vehicle?.name || launch.rocket}</p>
+          <p className="text-lg md:text-xl text-gray-400 mb-2">📍 {launch.pad?.name || launch.launchBase}</p>
+          <p className="text-lg md:text-xl text-gray-400 mb-8">🕒 {launch.date_str || formatDate(getLaunchDate(launch))}</p>
           
           {/* Countdown Timer - Only show for scheduled launches */}
           {launch.status === 'scheduled' && (
@@ -198,11 +230,62 @@ const LaunchDetail = () => {
                   {/* Mission Overview */}
                   <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-6 rounded-lg mb-6">
                     <h3 className="text-xl font-bold mb-3">Mission Overview</h3>
-                    <p className="text-gray-300 mb-4">{launch.description}</p>
+                    
+                    {/* Quick text summary */}
+                    {launch.quicktext && (
+                      <p className="text-gray-300 mb-4 font-medium">{launch.quicktext}</p>
+                    )}
+                    
+                    {/* Launch description */}
+                    {launch.launch_description && (
+                      <div className="mb-4">
+                        <h4 className="font-semibold mb-2">Launch Description</h4>
+                        <p className="text-gray-300">{launch.launch_description}</p>
+                      </div>
+                    )}
+                    
+                    {/* Mission description */}
+                    {launch.mission_description && (
+                      <div className="mb-4">
+                        <h4 className="font-semibold mb-2">Mission Description</h4>
+                        <p className="text-gray-300">{launch.mission_description}</p>
+                      </div>
+                    )}
+                    
+                    {/* Legacy description fallback */}
+                    {!launch.launch_description && !launch.mission_description && launch.description && (
+                      <p className="text-gray-300 mb-4">{launch.description}</p>
+                    )}
+                    
+                    {/* Missions array */}
+                    {launch.missions && launch.missions.length > 0 && (
+                      <div className="mb-4">
+                        <h4 className="font-semibold mb-2">Missions</h4>
+                        {launch.missions.map((mission) => (
+                          <div key={mission.id} className="mb-2 p-3 bg-[#0a0a0a] rounded">
+                            <p className="font-medium">{mission.name}</p>
+                            {mission.description && <p className="text-sm text-gray-400">{mission.description}</p>}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
                     <ul className="grid sm:grid-cols-2 gap-4 text-gray-300">
                       <li><strong>Mission Name:</strong> {launch.name}</li>
                       <li><strong>Status:</strong> {launch.status === 'successful' ? 'Success' : launch.status === 'failed' ? 'Failed' : launch.status === 'cancelled' ? 'Cancelled' : 'Scheduled'}</li>
-                      <li><strong>Launch Time:</strong> {formatDate(launch.date)}</li>
+                      <li><strong>Launch Time:</strong> {launch.date_str || formatDate(getLaunchDate(launch))}</li>
+                      {launch.window_open && launch.window_close && (
+                        <li><strong>Launch Window:</strong> {new Date(launch.window_open).toLocaleTimeString('en-US', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' })} - {new Date(launch.window_close).toLocaleTimeString('en-US', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' })} UTC</li>
+                      )}
+                      {launch.win_open && launch.win_close && !launch.window_open && (
+                        <li><strong>Launch Window:</strong> {new Date(launch.win_open).toLocaleTimeString('en-US', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' })} - {new Date(launch.win_close).toLocaleTimeString('en-US', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' })} UTC</li>
+                      )}
+                      {launch.cospar_id && (
+                        <li><strong>COSPAR ID:</strong> {launch.cospar_id}</li>
+                      )}
+                      {launch.suborbital !== undefined && (
+                        <li><strong>Suborbital:</strong> {launch.suborbital ? 'Yes' : 'No'}</li>
+                      )}
                       <li><strong>Mission Type:</strong> {
                         launch.name.includes('Starlink') ? 'Satellite Deployment' :
                         launch.name.includes('Crew') ? 'Crewed Mission' :
@@ -211,7 +294,45 @@ const LaunchDetail = () => {
                         'Communication Satellite'
                       }</li>
                     </ul>
+                    
+                    {/* Tags */}
+                    {launch.tags && launch.tags.length > 0 && (
+                      <div className="mt-4">
+                        <h4 className="font-semibold mb-2">Tags</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {launch.tags.map((tag) => (
+                            <Badge key={tag.id} variant="secondary">
+                              {tag.text}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
+
+                  {/* Weather Information */}
+                  {(launch.weather_summary || launch.weather_condition) && (
+                    <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-6 rounded-lg mb-6">
+                      <h3 className="text-xl font-bold mb-3">Weather Information</h3>
+                      {launch.weather_summary && (
+                        <p className="text-gray-300 mb-4">{launch.weather_summary}</p>
+                      )}
+                      <ul className="grid sm:grid-cols-2 gap-4 text-gray-300">
+                        {launch.weather_condition && (
+                          <li><strong>Condition:</strong> {launch.weather_condition}</li>
+                        )}
+                        {launch.weather_temp !== undefined && (
+                          <li><strong>Temperature:</strong> {launch.weather_temp}°F</li>
+                        )}
+                        {launch.weather_wind_mph !== undefined && (
+                          <li><strong>Wind Speed:</strong> {launch.weather_wind_mph} mph</li>
+                        )}
+                        {launch.weather_updated && (
+                          <li><strong>Updated:</strong> {new Date(launch.weather_updated).toLocaleString('en-US', { timeZone: 'UTC', timeZoneName: 'short' })}</li>
+                        )}
+                      </ul>
+                    </div>
+                  )}
 
                   {/* Rocket Information */}
                   {rocket && (
@@ -239,16 +360,40 @@ const LaunchDetail = () => {
                   )}
 
                   {/* Launch Site */}
-                  {launchBase && (
+                  {(launch.pad || launchBase) && (
                     <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-6 rounded-lg mb-6">
                       <h3 className="text-xl font-bold mb-3">Launch Site Information</h3>
-                      <h4 className="text-2xl font-bold mb-2">{launchBase.name}</h4>
-                      <p className="text-gray-400 mb-4">{launchBase.location}</p>
-                      <p className="text-gray-300 mb-4">{launchBase.description}</p>
-                      <ul className="grid sm:grid-cols-2 gap-4 text-gray-300">
-                        <li><strong>Country:</strong> {launchBase.country}</li>
-                        <li><strong>Coordinates:</strong> {launchBase.latitude.toFixed(4)}°N, {Math.abs(launchBase.longitude).toFixed(4)}°W</li>
-                      </ul>
+                      
+                      {/* Pad name */}
+                      <h4 className="text-2xl font-bold mb-2">{launch.pad?.name || launchBase?.name}</h4>
+                      
+                      {/* Location from pad or launchBase */}
+                      {launch.pad?.location && (
+                        <>
+                          <p className="text-gray-400 mb-4">
+                            {launch.pad.location.name}
+                            {launch.pad.location.statename && `, ${launch.pad.location.statename}`}
+                          </p>
+                          <ul className="grid sm:grid-cols-2 gap-4 text-gray-300">
+                            <li><strong>Country:</strong> {launch.pad.location.country}</li>
+                            {launch.pad.location.state && (
+                              <li><strong>State:</strong> {launch.pad.location.statename || launch.pad.location.state}</li>
+                            )}
+                          </ul>
+                        </>
+                      )}
+                      {!launch.pad?.location && launchBase && (
+                        <>
+                          <p className="text-gray-400 mb-4">{launchBase.location}</p>
+                          <p className="text-gray-300 mb-4">{launchBase.description}</p>
+                          <ul className="grid sm:grid-cols-2 gap-4 text-gray-300">
+                            <li><strong>Country:</strong> {launchBase.country}</li>
+                            {launchBase.latitude !== 0 && launchBase.longitude !== 0 && (
+                              <li><strong>Coordinates:</strong> {launchBase.latitude.toFixed(4)}°N, {Math.abs(launchBase.longitude).toFixed(4)}°W</li>
+                            )}
+                          </ul>
+                        </>
+                      )}
                     </div>
                   )}
 
@@ -256,7 +401,7 @@ const LaunchDetail = () => {
                   <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-6 rounded-lg">
                     <h3 className="text-xl font-bold mb-3">Payload Information</h3>
                     <ul className="grid sm:grid-cols-2 gap-4 text-gray-300">
-                      <li><strong>Launch Provider:</strong> {rocket?.company || 'N/A'}</li>
+                      <li><strong>Launch Provider:</strong> {launch.provider?.name || rocket?.company || 'N/A'}</li>
                       <li><strong>Target Orbit:</strong> {
                         launch.name.includes('Starlink') || launch.name.includes('OneWeb') ? 'Low Earth Orbit (LEO)' :
                         launch.name.includes('GPS') || launch.name.includes('SES') ? 'Geostationary Orbit (GEO)' :
@@ -264,7 +409,7 @@ const LaunchDetail = () => {
                         launch.name.includes('Moon') || launch.name.includes('Artemis') ? 'Trans-Lunar Injection' :
                         'Low Earth Orbit (LEO)'
                       }</li>
-                      {rocket?.name.includes('Falcon') && (
+                      {(rocket?.name.includes('Falcon') || launch.vehicle?.name.includes('Falcon')) && (
                         <>
                           <li><strong>First Stage Recovery:</strong> Yes</li>
                           <li><strong>Fairing Recovery:</strong> Yes</li>

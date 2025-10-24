@@ -7,7 +7,13 @@ import { fetchRocketLaunches } from '../services/launchesService';
 import { fetchNews } from '../services/newsService';
 import { fetchRockets } from '../services/rocketsService';
 import { fetchCompanies } from '../services/companiesService';
+import type { Launch } from '../types';
 import './Home.css';
+
+// Helper to get the best date field from launch data
+const getLaunchDate = (launch: Launch): string => {
+  return launch.t0 || launch.window_open || launch.win_open || launch.date || launch.created_at || '';
+};
 
 const Home = () => {
   const fetchLaunchesCallback = useCallback(() => fetchRocketLaunches(), []);
@@ -28,10 +34,16 @@ const Home = () => {
     const now = new Date();
     const upcomingLaunches = launches
       .filter((launch) => {
-        const launchDate = new Date(launch.date);
+        const dateStr = getLaunchDate(launch);
+        if (!dateStr) return false;
+        const launchDate = new Date(dateStr);
         return launch.status === 'scheduled' && launchDate >= now;
       })
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      .sort((a, b) => {
+        const dateA = getLaunchDate(a);
+        const dateB = getLaunchDate(b);
+        return new Date(dateA).getTime() - new Date(dateB).getTime();
+      });
     
     return upcomingLaunches[0];
   }, [launches]);
@@ -49,7 +61,9 @@ const Home = () => {
     if (!nextLaunch) return;
 
     const updateCountdown = () => {
-      const launchDate = new Date(nextLaunch.date).getTime();
+      const dateStr = getLaunchDate(nextLaunch);
+      if (!dateStr) return;
+      const launchDate = new Date(dateStr).getTime();
       const now = new Date().getTime();
       const distance = launchDate - now;
 
@@ -76,7 +90,11 @@ const Home = () => {
     if (!launches) return [];
     return launches
       .filter((launch) => launch.status === 'successful' || launch.status === 'failed')
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => {
+        const dateA = getLaunchDate(a);
+        const dateB = getLaunchDate(b);
+        return new Date(dateB).getTime() - new Date(dateA).getTime();
+      })
       .slice(0, 6);
   }, [launches]);
 
@@ -104,10 +122,16 @@ const Home = () => {
     const now = new Date();
     return launches
       .filter((launch) => {
-        const launchDate = new Date(launch.date);
+        const dateStr = getLaunchDate(launch);
+        if (!dateStr) return false;
+        const launchDate = new Date(dateStr);
         return launch.status === 'scheduled' && launchDate >= now;
       })
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      .sort((a, b) => {
+        const dateA = getLaunchDate(a);
+        const dateB = getLaunchDate(b);
+        return new Date(dateA).getTime() - new Date(dateB).getTime();
+      });
   }, [launches]);
 
   const formatDate = (dateString: string) => {
@@ -209,11 +233,11 @@ const Home = () => {
                     <Badge className="bg-blue-600">Scheduled</Badge>
                   </div>
                   <div className="space-y-2 text-sm text-gray-400 mb-4">
-                    <p>🚀 {launch.rocket}</p>
-                    <p>📍 {launch.launchBase}</p>
-                    <p>📅 {formatDate(launch.date)} UTC</p>
+                    <p>🚀 {launch.vehicle?.name || launch.rocket}</p>
+                    <p>📍 {launch.pad?.name || launch.launchBase}</p>
+                    <p>📅 {launch.date_str || formatDate(getLaunchDate(launch))} UTC</p>
                   </div>
-                  <p className="text-gray-300 line-clamp-2">{launch.description}</p>
+                  <p className="text-gray-300 line-clamp-2">{launch.quicktext || launch.launch_description || launch.mission_description || launch.description}</p>
                 </div>
               </Link>
             ))}
@@ -238,10 +262,10 @@ const Home = () => {
                     <div className="flex-1">
                       <h3 className="text-xl font-bold mb-2">{launch.name}</h3>
                       <div className="flex gap-4 text-sm text-gray-400 mb-2">
-                        <span>📅 {formatDate(launch.date)}</span>
-                        <span>🚀 {launch.rocket}</span>
+                        <span>📅 {launch.date_str || formatDate(getLaunchDate(launch))}</span>
+                        <span>🚀 {launch.vehicle?.name || launch.rocket}</span>
                       </div>
-                      <p className="text-sm text-gray-400">📍 {launch.launchBase}</p>
+                      <p className="text-sm text-gray-400">📍 {launch.pad?.name || launch.launchBase}</p>
                     </div>
                     <Badge 
                       className={launch.status === 'successful' ? 'bg-green-600' : 'bg-red-600'}

@@ -16,15 +16,85 @@ export interface Rocket {
 export interface Launch {
   id: number;
   name: string;
-  date: string;
+  // Legacy date field for backward compatibility
+  date?: string;
   rocket_id?: number;
-  rocket: string;
+  rocket?: string;
   launch_base_id?: number;
-  launchBase: string;
+  launchBase?: string;
   status: 'scheduled' | 'successful' | 'failed' | 'cancelled';
-  description: string;
+  description?: string;
   created_at?: string;
   updated_at?: string;
+  
+  // New fields from API changes
+  cospar_id?: string;
+  sort_date?: string;
+  slug?: string;
+  modified?: string;
+  
+  // Launch window fields
+  window_open?: string;
+  win_open?: string; // API might use this variant
+  t0?: string;
+  window_close?: string;
+  win_close?: string; // API might use this variant
+  date_str?: string;
+  
+  // Provider information (nested)
+  provider_id?: number;
+  provider?: {
+    id: number;
+    name: string;
+    slug: string;
+  };
+  
+  // Vehicle information (nested)
+  vehicle?: {
+    id: number;
+    name: string;
+    company_id?: number;
+    slug: string;
+  };
+  
+  // Pad & Location (nested)
+  pad?: {
+    id: number;
+    name: string;
+    location?: {
+      id: number;
+      name: string;
+      state: string;
+      statename: string;
+      country: string;
+      slug: string;
+    };
+  };
+  
+  // Mission details
+  mission_description?: string;
+  launch_description?: string;
+  missions?: Array<{
+    id: number;
+    name: string;
+    description: string;
+  }>;
+  
+  // Weather information
+  weather_summary?: string;
+  weather_temp?: number;
+  weather_condition?: string;
+  weather_wind_mph?: number;
+  weather_icon?: string;
+  weather_updated?: string;
+  
+  // Additional metadata
+  tags?: Array<{
+    id: number;
+    text: string;
+  }>;
+  quicktext?: string;
+  suborbital?: boolean;
 }
 
 export interface News {
