@@ -22,7 +22,10 @@ function AppContent() {
 
   // Scroll to top on route change
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Only scroll if not already at the top to avoid unnecessary operations
+    if (window.scrollY > 0) {
+      window.scrollTo(0, 0);
+    }
   }, [location.pathname]);
 
   return (
